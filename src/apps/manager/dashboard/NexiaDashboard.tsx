@@ -1,0 +1,249 @@
+import React from 'react';
+import { useNexiaStore } from '../../../store/useNexiaStore';
+import { 
+  Building2, 
+  ShieldCheck, 
+  Droplets, 
+  Shirt, 
+  TrendingUp, 
+  Users, 
+  AlertCircle,
+  ArrowUpRight,
+  Clock,
+  CheckCircle,
+  Activity
+} from 'lucide-react';
+
+const KpiCard = ({ title, value, change, icon: Icon, colorClass }: any) => (
+  <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col hover:-translate-y-1 transition-transform duration-300">
+    <div className="flex justify-between items-start mb-4">
+      <div className={`p-3 rounded-2xl ${colorClass}`}>
+        <Icon className="w-6 h-6" />
+      </div>
+      <span className="flex items-center text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-1 rounded-full">
+        <ArrowUpRight className="w-3 h-3 mr-1" />
+        {change}
+      </span>
+    </div>
+    <h3 className="text-slate-500 dark:text-slate-400 text-sm font-semibold mb-1">{title}</h3>
+    <p className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">{value}</p>
+  </div>
+);
+
+export const NexiaDashboard = () => {
+  const { buildings, activeIncidents, finances, employees, paymentLedger } = useNexiaStore();
+
+  const totalRevenue = Object.values(finances).reduce((sum, f) => {
+    return sum + (f.monthlyCharge * (f.paidApts?.length || 0));
+  }, 0);
+
+  const activeContracts = buildings.length;
+  const activeAgents = employees.length;
+
+  const today = new Date();
+  const currentPeriod = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
+
+  const recentActivity = [
+    { id: 1, title: 'Nouveau contrat de nettoyage', desc: 'OPGI - Résidence Les Palmiers', time: 'Il y a 2h', icon: Droplets, color: 'text-sky-500', bg: 'bg-sky-50 dark:bg-sky-500/10' },
+    { id: 2, title: 'Alerte Sécurité', desc: 'Caméra H.S - AADL Tour 4', time: 'Il y a 3h', icon: ShieldCheck, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-500/10' },
+    { id: 3, title: 'Lot Blanchisserie livré', desc: 'Hôtel Le Méridien Oran (450kg)', time: 'Hier', icon: Shirt, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-500/10' },
+  ];
+
+  return (
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      
+      {/* Header */}
+      <div>
+        <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-2">
+          Vue d'ensemble
+        </h1>
+        <p className="text-slate-500 dark:text-slate-400 font-medium">
+          Performance globale des 4 pôles NEXIA Solution.
+        </p>
+      </div>
+
+      {/* KPI Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <KpiCard 
+          title="Chiffre d'Affaires (Mois)" 
+          value={`${totalRevenue.toLocaleString()} DA`} 
+          change="+14%" 
+          icon={TrendingUp} 
+          colorClass="bg-amber-100 text-amber-600 dark:bg-amber-500/20 dark:text-amber-400"
+        />
+        <KpiCard 
+          title="Contrats Actifs" 
+          value={activeContracts.toString()} 
+          change="+3" 
+          icon={Building2} 
+          colorClass="bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400"
+        />
+        <KpiCard 
+          title="Agents Déployés" 
+          value={activeAgents.toString()} 
+          change="+2" 
+          icon={Users} 
+          colorClass="bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400"
+        />
+        <KpiCard 
+          title="Interventions en cours" 
+          value={activeIncidents.length.toString()} 
+          change="-1" 
+          icon={AlertCircle} 
+          colorClass="bg-rose-100 text-rose-600 dark:bg-rose-500/20 dark:text-rose-400"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Main Chart Area */}
+        <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">Revenus par Pôle</h2>
+            <select className="bg-slate-100 dark:bg-slate-800 border-none rounded-xl text-sm font-semibold px-4 py-2 outline-none cursor-pointer">
+              <option>Cette année</option>
+              <option>An 1 (Cible)</option>
+              <option>An 3 (Cible)</option>
+            </select>
+          </div>
+          
+          <div className="h-64 flex items-end gap-2 sm:gap-6 justify-between mt-4">
+            {/* Simple CSS Bar Chart Simulation */}
+            {[
+              { label: 'Jan', sec: 40, imm: 30, net: 20, bla: 10 },
+              { label: 'Fév', sec: 45, imm: 30, net: 25, bla: 12 },
+              { label: 'Mar', sec: 50, imm: 30, net: 22, bla: 15 },
+              { label: 'Avr', sec: 55, imm: 35, net: 28, bla: 20 },
+              { label: 'Mai', sec: 60, imm: 35, net: 35, bla: 25 },
+              { label: 'Juin', sec: 80, imm: 40, net: 40, bla: 30 },
+            ].map((col, idx) => (
+              <div key={idx} className="flex flex-col items-center flex-1 group">
+                <div className="w-full max-w-[40px] h-full flex flex-col justify-end gap-1">
+                  <div style={{ height: `${col.bla}%` }} className="w-full bg-indigo-400 rounded-sm hover:brightness-110 transition-all cursor-pointer"></div>
+                  <div style={{ height: `${col.net}%` }} className="w-full bg-sky-400 rounded-sm hover:brightness-110 transition-all cursor-pointer"></div>
+                  <div style={{ height: `${col.imm}%` }} className="w-full bg-amber-400 rounded-sm hover:brightness-110 transition-all cursor-pointer"></div>
+                  <div style={{ height: `${col.sec}%` }} className="w-full bg-slate-800 dark:bg-slate-600 rounded-sm hover:brightness-110 transition-all cursor-pointer"></div>
+                </div>
+                <span className="text-xs font-bold text-slate-400 mt-3 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors">{col.label}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-6 mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
+            <div className="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-400"><div className="w-3 h-3 rounded-full bg-slate-800 dark:bg-slate-600"></div> Sécurité</div>
+            <div className="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-400"><div className="w-3 h-3 rounded-full bg-amber-400"></div> Immobilier</div>
+            <div className="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-400"><div className="w-3 h-3 rounded-full bg-sky-400"></div> Nettoyage</div>
+            <div className="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-400"><div className="w-3 h-3 rounded-full bg-indigo-400"></div> Blanchisserie</div>
+          </div>
+        </div>
+
+        {/* Recent Activity Feed */}
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col">
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">Activité Récente</h2>
+          </div>
+          
+          <div className="flex-1 space-y-6">
+            {recentActivity.map((activity) => (
+              <div key={activity.id} className="flex gap-4 group cursor-pointer">
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${activity.bg} ${activity.color} group-hover:scale-110 transition-transform`}>
+                  <activity.icon className="w-6 h-6" />
+                </div>
+                <div className="flex-1 min-w-0 flex flex-col justify-center">
+                  <h4 className="text-sm font-bold text-slate-900 dark:text-white truncate group-hover:text-amber-500 transition-colors">{activity.title}</h4>
+                  <p className="text-xs text-slate-500 truncate">{activity.desc}</p>
+                </div>
+                <div className="text-[10px] font-bold text-slate-400 whitespace-nowrap mt-1">
+                  {activity.time}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <button className="w-full mt-6 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-sm">
+            Voir tout l'historique
+          </button>
+        </div>
+      </div>
+
+      {/* Portfolio Overview Table */}
+      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <Building2 className="w-5 h-5 text-emerald-500" />
+            Portefeuille Immobilier (Vue Globale)
+          </h2>
+        </div>
+        
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="border-b border-slate-200 dark:border-slate-800">
+                <th className="pb-3 pr-4 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Résidence</th>
+                <th className="pb-3 px-4 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">Unités</th>
+                <th className="pb-3 px-4 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">Recouvrement (Mois)</th>
+                <th className="pb-3 px-4 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">Incidents</th>
+                <th className="pb-3 px-4 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Statut Global</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
+              {buildings.map(building => {
+                const ledger = paymentLedger[building.id] || [];
+                const paidThisMonth = ledger.filter(p => p.period === currentPeriod).length;
+                const collectionRate = building.totalUnits > 0 ? (paidThisMonth / building.totalUnits) * 100 : 0;
+                
+                const bIncidents = activeIncidents.filter(i => i.buildingId === building.id);
+                
+                return (
+                  <tr key={building.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                    <td className="py-4 pr-4 font-bold text-slate-900 dark:text-white">{building.name}</td>
+                    <td className="py-4 px-4 text-center text-slate-600 dark:text-slate-400 font-medium">{building.totalUnits}</td>
+                    <td className="py-4 px-4">
+                      <div className="flex items-center gap-3 justify-center">
+                        <div className="flex-1 max-w-[100px] h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                          <div 
+                            className={`h-full rounded-full ${collectionRate > 75 ? 'bg-emerald-500' : collectionRate > 40 ? 'bg-amber-500' : 'bg-rose-500'}`}
+                            style={{ width: `${Math.min(100, collectionRate)}%` }}
+                          />
+                        </div>
+                        <span className="font-bold text-slate-700 dark:text-slate-300 min-w-[3rem] text-right">
+                          {Math.round(collectionRate)}%
+                        </span>
+                      </div>
+                    </td>
+                    <td className="py-4 px-4 text-center">
+                      {bIncidents.length > 0 ? (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-400">
+                          <AlertCircle className="w-3.5 h-3.5" />
+                          {bIncidents.length}
+                        </span>
+                      ) : (
+                        <span className="text-slate-300 dark:text-slate-600">-</span>
+                      )}
+                    </td>
+                    <td className="py-4 px-4 text-right">
+                      {building.status === 'alert' ? (
+                        <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-600">
+                          <Activity className="w-4 h-4" /> Alerte
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-600">
+                          <CheckCircle className="w-4 h-4" /> Normal
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+              {buildings.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="py-8 text-center text-slate-500">Aucune résidence enregistrée.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  );
+};

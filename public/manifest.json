@@ -1,0 +1,80 @@
+{
+  "short_name": "Haven",
+  "name": "Haven — Résidence & Syndic",
+  "description": "Portail résidentiel et gestion des coupures d'eau et électricité",
+  "icons": [
+    {
+      "src": "assets/icons/icon-48.webp",
+      "type": "image/png",
+      "sizes": "48x48",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-72.webp",
+      "type": "image/png",
+      "sizes": "72x72",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-96.webp",
+      "type": "image/png",
+      "sizes": "96x96",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-128.webp",
+      "type": "image/png",
+      "sizes": "128x128",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-192.webp",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-256.webp",
+      "type": "image/png",
+      "sizes": "256x256",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-512.webp",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "./?standalone=true",
+  "background_color": "#F8FAFC",
+  "theme_color": "#10B981",
+  "display": "standalone",
+  "orientation": "portrait",
+  "shortcuts": [
+    {
+      "name": "Haven Résidents",
+      "short_name": "Résidents",
+      "description": "Espace Résident & Statut Eau",
+      "url": "./?app=resident&standalone=true",
+      "icons": [
+        {
+          "src": "./assets/favicon.svg",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Haven Syndic",
+      "short_name": "Syndic",
+      "description": "Suite Gestionnaire & Alertes",
+      "url": "./?app=manager&standalone=true",
+      "icons": [
+        {
+          "src": "./assets/favicon.svg",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
