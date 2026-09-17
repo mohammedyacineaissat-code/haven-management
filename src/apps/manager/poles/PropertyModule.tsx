@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNexiaStore } from '../../../store/useNexiaStore';
+import { useLanguageStore } from '../../../store/useLanguageStore';
 import { FinancesBoard } from '../../../components/manager/FinancesBoard';
 import { FixedChargesTab } from '../../../components/manager/FixedChargesTab';
 import { GrosTravauxTab } from '../../../components/manager/GrosTravauxTab';
@@ -20,6 +21,7 @@ import {
 
 export const PropertyModule = () => {
   const { buildings, activeBuildingId, setActiveBuilding } = useNexiaStore();
+  const { t } = useLanguageStore();
   const [activeTab, setActiveTab] = useState<'finances' | 'fixed_charges' | 'gros_travaux' | 'notices'>('finances');
   
   // Modals state
@@ -38,10 +40,10 @@ export const PropertyModule = () => {
         <div>
           <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2 mb-2">
             <Building2 className="w-6 h-6 text-amber-500" />
-            Pôle Immobilier & Syndic
+            {t.property_module.title}
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
-            Gestion des copropriétés, conciergerie Airbnb, et suivi des charges.
+            {t.property_module.subtitle}
           </p>
         </div>
 
@@ -63,7 +65,7 @@ export const PropertyModule = () => {
           <button 
             onClick={() => setIsAddBuildingModalOpen(true)}
             className="p-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl hover:scale-105 transition-transform"
-            title="Ajouter un immeuble"
+            title={t.property_module.add_building}
           >
             <Plus className="w-5 h-5" />
           </button>
@@ -73,10 +75,10 @@ export const PropertyModule = () => {
       {/* Tabs Navigation */}
       <div className="flex overflow-x-auto hide-scrollbar gap-2 p-1 bg-slate-200/50 dark:bg-slate-800/50 rounded-2xl w-fit border border-slate-200/80 dark:border-slate-800/80">
         {[
-          { id: 'finances', label: 'Bilan & Recouvrement', icon: Calculator },
-          { id: 'fixed_charges', label: 'Charges Fixes', icon: Wallet },
-          { id: 'gros_travaux', label: 'Gros Travaux', icon: Wrench },
-          { id: 'notices', label: 'Affichage & Alertes', icon: Megaphone },
+          { id: 'finances', label: t.property_module.tab_finances, icon: Calculator },
+          { id: 'fixed_charges', label: t.property_module.tab_fixed_charges, icon: Wallet },
+          { id: 'gros_travaux', label: t.property_module.tab_heavy_works, icon: Wrench },
+          { id: 'notices', label: t.property_module.tab_notices, icon: Megaphone },
         ].map(tab => (
           <button
             key={tab.id}
@@ -114,12 +116,12 @@ export const PropertyModule = () => {
         {activeTab === 'notices' && (
           <div className="max-w-3xl">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="font-bold text-lg text-slate-900 dark:text-white">Tableau d'affichage virtuel</h3>
+              <h3 className="font-bold text-lg text-slate-900 dark:text-white">{t.property_module.virtual_notice_board}</h3>
               <button 
                 onClick={() => setIsAnnouncementModalOpen(true)}
                 className="px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-bold rounded-xl hover:-translate-y-0.5 transition-transform"
               >
-                Nouvelle Annonce
+                {t.property_module.new_announcement}
               </button>
             </div>
             <NoticeBoard />

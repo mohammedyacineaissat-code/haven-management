@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNexiaStore } from '../../../store/useNexiaStore';
+import { useLanguageStore } from '../../../store/useLanguageStore';
 import { 
   Building2, 
   ShieldCheck, 
@@ -32,6 +33,7 @@ const KpiCard = ({ title, value, change, icon: Icon, colorClass }: any) => (
 
 export const NexiaDashboard = () => {
   const { buildings, activeIncidents, finances, employees, paymentLedger } = useNexiaStore();
+  const { t } = useLanguageStore();
 
   const totalRevenue = Object.values(finances).reduce((sum, f) => {
     return sum + (f.monthlyCharge * (f.paidApts?.length || 0));
@@ -44,9 +46,9 @@ export const NexiaDashboard = () => {
   const currentPeriod = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
 
   const recentActivity = [
-    { id: 1, title: 'Nouveau contrat de nettoyage', desc: 'OPGI - Résidence Les Palmiers', time: 'Il y a 2h', icon: Droplets, color: 'text-sky-500', bg: 'bg-sky-50 dark:bg-sky-500/10' },
-    { id: 2, title: 'Alerte Sécurité', desc: 'Caméra H.S - AADL Tour 4', time: 'Il y a 3h', icon: ShieldCheck, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-500/10' },
-    { id: 3, title: 'Lot Blanchisserie livré', desc: 'Hôtel Le Méridien Oran (450kg)', time: 'Hier', icon: Shirt, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-500/10' },
+    { id: 1, title: t.nexia_dashboard.mock_activity_1_title, desc: t.nexia_dashboard.mock_activity_1_desc, time: t.nexia_dashboard.mock_activity_1_time, icon: Droplets, color: 'text-sky-500', bg: 'bg-sky-50 dark:bg-sky-500/10' },
+    { id: 2, title: t.nexia_dashboard.mock_activity_2_title, desc: t.nexia_dashboard.mock_activity_2_desc, time: t.nexia_dashboard.mock_activity_2_time, icon: ShieldCheck, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-500/10' },
+    { id: 3, title: t.nexia_dashboard.mock_activity_3_title, desc: t.nexia_dashboard.mock_activity_3_desc, time: t.nexia_dashboard.mock_activity_3_time, icon: Shirt, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-500/10' },
   ];
 
   return (
@@ -55,38 +57,38 @@ export const NexiaDashboard = () => {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-2">
-          Vue d'ensemble
+          {t.nexia_dashboard.overview_title}
         </h1>
         <p className="text-slate-500 dark:text-slate-400 font-medium">
-          Performance globale des 4 pôles NEXIA Solution.
+          {t.nexia_dashboard.overview_subtitle}
         </p>
       </div>
 
       {/* KPI Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <KpiCard 
-          title="Chiffre d'Affaires (Mois)" 
+          title={t.nexia_dashboard.kpi_revenue} 
           value={`${totalRevenue.toLocaleString()} DA`} 
           change="+14%" 
           icon={TrendingUp} 
           colorClass="bg-amber-100 text-amber-600 dark:bg-amber-500/20 dark:text-amber-400"
         />
         <KpiCard 
-          title="Contrats Actifs" 
+          title={t.nexia_dashboard.kpi_contracts} 
           value={activeContracts.toString()} 
           change="+3" 
           icon={Building2} 
           colorClass="bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400"
         />
         <KpiCard 
-          title="Agents Déployés" 
+          title={t.nexia_dashboard.kpi_agents} 
           value={activeAgents.toString()} 
           change="+2" 
           icon={Users} 
           colorClass="bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400"
         />
         <KpiCard 
-          title="Interventions en cours" 
+          title={t.nexia_dashboard.kpi_incidents} 
           value={activeIncidents.length.toString()} 
           change="-1" 
           icon={AlertCircle} 
@@ -98,23 +100,23 @@ export const NexiaDashboard = () => {
         {/* Main Chart Area */}
         <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 shadow-sm">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white">Revenus par Pôle</h2>
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">{t.nexia_dashboard.chart_revenue_by_pole}</h2>
             <select className="bg-slate-100 dark:bg-slate-800 border-none rounded-xl text-sm font-semibold px-4 py-2 outline-none cursor-pointer">
-              <option>Cette année</option>
-              <option>An 1 (Cible)</option>
-              <option>An 3 (Cible)</option>
+              <option>{t.nexia_dashboard.filter_this_year}</option>
+              <option>{t.nexia_dashboard.filter_year_1}</option>
+              <option>{t.nexia_dashboard.filter_year_3}</option>
             </select>
           </div>
           
           <div className="h-64 flex items-end gap-2 sm:gap-6 justify-between mt-4">
             {/* Simple CSS Bar Chart Simulation */}
             {[
-              { label: 'Jan', sec: 40, imm: 30, net: 20, bla: 10 },
-              { label: 'Fév', sec: 45, imm: 30, net: 25, bla: 12 },
-              { label: 'Mar', sec: 50, imm: 30, net: 22, bla: 15 },
-              { label: 'Avr', sec: 55, imm: 35, net: 28, bla: 20 },
-              { label: 'Mai', sec: 60, imm: 35, net: 35, bla: 25 },
-              { label: 'Juin', sec: 80, imm: 40, net: 40, bla: 30 },
+              { label: t.nexia_dashboard.month_jan, sec: 40, imm: 30, net: 20, bla: 10 },
+              { label: t.nexia_dashboard.month_feb, sec: 45, imm: 30, net: 25, bla: 12 },
+              { label: t.nexia_dashboard.month_mar, sec: 50, imm: 30, net: 22, bla: 15 },
+              { label: t.nexia_dashboard.month_apr, sec: 55, imm: 35, net: 28, bla: 20 },
+              { label: t.nexia_dashboard.month_may, sec: 60, imm: 35, net: 35, bla: 25 },
+              { label: t.nexia_dashboard.month_jun, sec: 80, imm: 40, net: 40, bla: 30 },
             ].map((col, idx) => (
               <div key={idx} className="flex flex-col items-center flex-1 group">
                 <div className="w-full max-w-[40px] h-full flex flex-col justify-end gap-1">
@@ -129,17 +131,17 @@ export const NexiaDashboard = () => {
           </div>
 
           <div className="flex flex-wrap justify-center gap-6 mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
-            <div className="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-400"><div className="w-3 h-3 rounded-full bg-slate-800 dark:bg-slate-600"></div> Sécurité</div>
-            <div className="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-400"><div className="w-3 h-3 rounded-full bg-amber-400"></div> Immobilier</div>
-            <div className="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-400"><div className="w-3 h-3 rounded-full bg-sky-400"></div> Nettoyage</div>
-            <div className="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-400"><div className="w-3 h-3 rounded-full bg-indigo-400"></div> Blanchisserie</div>
+            <div className="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-400"><div className="w-3 h-3 rounded-full bg-slate-800 dark:bg-slate-600"></div> {t.nexia_dashboard.legend_security}</div>
+            <div className="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-400"><div className="w-3 h-3 rounded-full bg-amber-400"></div> {t.nexia_dashboard.legend_real_estate}</div>
+            <div className="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-400"><div className="w-3 h-3 rounded-full bg-sky-400"></div> {t.nexia_dashboard.legend_cleaning}</div>
+            <div className="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-400"><div className="w-3 h-3 rounded-full bg-indigo-400"></div> {t.nexia_dashboard.legend_laundry}</div>
           </div>
         </div>
 
         {/* Recent Activity Feed */}
         <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white">Activité Récente</h2>
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">{t.nexia_dashboard.recent_activity_title}</h2>
           </div>
           
           <div className="flex-1 space-y-6">
@@ -160,7 +162,7 @@ export const NexiaDashboard = () => {
           </div>
 
           <button className="w-full mt-6 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-sm">
-            Voir tout l'historique
+            {t.nexia_dashboard.view_all_history}
           </button>
         </div>
       </div>
@@ -170,7 +172,7 @@ export const NexiaDashboard = () => {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <Building2 className="w-5 h-5 text-emerald-500" />
-            Portefeuille Immobilier (Vue Globale)
+            {t.nexia_dashboard.portfolio_title}
           </h2>
         </div>
         
@@ -178,11 +180,11 @@ export const NexiaDashboard = () => {
           <table className="w-full text-left text-sm">
             <thead>
               <tr className="border-b border-slate-200 dark:border-slate-800">
-                <th className="pb-3 pr-4 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Résidence</th>
-                <th className="pb-3 px-4 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">Unités</th>
-                <th className="pb-3 px-4 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">Recouvrement (Mois)</th>
-                <th className="pb-3 px-4 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">Incidents</th>
-                <th className="pb-3 px-4 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Statut Global</th>
+                <th className="pb-3 pr-4 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{t.nexia_dashboard.col_residence}</th>
+                <th className="pb-3 px-4 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">{t.nexia_dashboard.col_units}</th>
+                <th className="pb-3 px-4 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">{t.nexia_dashboard.col_collection}</th>
+                <th className="pb-3 px-4 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">{t.nexia_dashboard.col_incidents}</th>
+                <th className="pb-3 px-4 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">{t.nexia_dashboard.col_status}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
@@ -223,11 +225,11 @@ export const NexiaDashboard = () => {
                     <td className="py-4 px-4 text-right">
                       {building.status === 'alert' ? (
                         <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-600">
-                          <Activity className="w-4 h-4" /> Alerte
+                          <Activity className="w-4 h-4" /> {t.nexia_dashboard.status_alert}
                         </span>
                       ) : (
                         <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-600">
-                          <CheckCircle className="w-4 h-4" /> Normal
+                          <CheckCircle className="w-4 h-4" /> {t.nexia_dashboard.status_normal}
                         </span>
                       )}
                     </td>
@@ -236,7 +238,7 @@ export const NexiaDashboard = () => {
               })}
               {buildings.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="py-8 text-center text-slate-500">Aucune résidence enregistrée.</td>
+                  <td colSpan={5} className="py-8 text-center text-slate-500">{t.nexia_dashboard.no_residence}</td>
                 </tr>
               )}
             </tbody>

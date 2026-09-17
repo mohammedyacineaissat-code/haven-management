@@ -12,18 +12,21 @@ import {
 } from 'lucide-react';
 
 import { useNexiaStore } from '../../../store/useNexiaStore';
-
-const mockBatches = [
-  { id: 'BL-2024-089', client: 'Hôtel Le Méridien', type: 'Draps & Serviettes', weight: '125 kg', status: 'washing', time: '10:30' },
-  { id: 'BL-2024-090', client: 'Hôtel Royal', type: 'Uniformes Staff', weight: '45 kg', status: 'ironing', time: '11:45' },
-  { id: 'BL-2024-091', client: 'Clinique Al-Shifa', type: 'Draps Médicaux', weight: '150 kg', status: 'delivered', time: '08:00' },
-  { id: 'BL-2024-092', client: 'Hôtel Le Méridien', type: 'Nappes Restaurant', weight: '80 kg', status: 'collected', time: '14:00' },
-];
+import { useLanguageStore } from '../../../store/useLanguageStore';
 
 export const LaundryModule = () => {
   const [activeTab, setActiveTab] = useState<'clients' | 'batches' | 'logistics'>('batches');
   
   const buildings = useNexiaStore(state => state.buildings);
+  const { t } = useLanguageStore();
+
+  const mockBatches = [
+    { id: 'BL-2024-089', client: 'Hôtel Le Méridien', type: t.laundry_module.mock_batch_1_type, weight: '125 kg', status: 'washing', time: '10:30' },
+    { id: 'BL-2024-090', client: 'Hôtel Royal', type: t.laundry_module.mock_batch_2_type, weight: '45 kg', status: 'ironing', time: '11:45' },
+    { id: 'BL-2024-091', client: 'Clinique Al-Shifa', type: t.laundry_module.mock_batch_3_type, weight: '150 kg', status: 'delivered', time: '08:00' },
+    { id: 'BL-2024-092', client: 'Hôtel Le Méridien', type: t.laundry_module.mock_batch_4_type, weight: '80 kg', status: 'collected', time: '14:00' },
+  ];
+
   const [searchQuery, setSearchQuery] = useState('');
   const filteredBuildings = buildings.filter(b => b.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
@@ -35,25 +38,25 @@ export const LaundryModule = () => {
         <div>
           <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2 mb-2">
             <Shirt className="w-6 h-6 text-amber-500" />
-            Blanchisserie Pro
+            {t.laundry_module.title}
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
-            Suivi des lots hôteliers/cliniques, du ramassage à la livraison.
+            {t.laundry_module.subtitle}
           </p>
         </div>
         
         <button className="flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold rounded-xl hover:-translate-y-0.5 transition-transform">
           <Plus className="w-4 h-4" />
-          Nouveau Lot
+          {t.laundry_module.new_batch}
         </button>
       </div>
 
       {/* Tabs */}
       <div className="flex overflow-x-auto hide-scrollbar gap-2 p-1 bg-slate-200/50 dark:bg-slate-800/50 rounded-2xl w-fit border border-slate-200/80 dark:border-slate-800/80">
         {[
-          { id: 'batches', label: 'Suivi des Lots', icon: PackageCheck },
-          { id: 'clients', label: 'Clients B2B', icon: Building2 },
-          { id: 'logistics', label: 'Tournées & Logistique', icon: Truck },
+          { id: 'batches', label: t.laundry_module.tab_batches, icon: PackageCheck },
+          { id: 'clients', label: t.laundry_module.tab_clients, icon: Building2 },
+          { id: 'logistics', label: t.laundry_module.tab_logistics, icon: Truck },
         ].map(tab => (
           <button
             key={tab.id}
@@ -78,18 +81,18 @@ export const LaundryModule = () => {
         {activeTab === 'batches' && (
           <div className="space-y-6">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-bold text-lg text-slate-900 dark:text-white">Lots en cours de traitement</h3>
+              <h3 className="font-bold text-lg text-slate-900 dark:text-white">{t.laundry_module.batches_list_title}</h3>
             </div>
             <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
               <table className="w-full text-left text-sm">
                 <thead className="bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
                   <tr>
-                    <th className="px-4 py-3 font-semibold">N° Lot</th>
-                    <th className="px-4 py-3 font-semibold">Client</th>
-                    <th className="px-4 py-3 font-semibold">Type de Linge</th>
-                    <th className="px-4 py-3 font-semibold">Poids</th>
-                    <th className="px-4 py-3 font-semibold">Statut</th>
-                    <th className="px-4 py-3 font-semibold">Heure</th>
+                    <th className="px-4 py-3 font-semibold">{t.laundry_module.col_batch_no}</th>
+                    <th className="px-4 py-3 font-semibold">{t.laundry_module.col_client}</th>
+                    <th className="px-4 py-3 font-semibold">{t.laundry_module.col_type}</th>
+                    <th className="px-4 py-3 font-semibold">{t.laundry_module.col_weight}</th>
+                    <th className="px-4 py-3 font-semibold">{t.laundry_module.col_status}</th>
+                    <th className="px-4 py-3 font-semibold">{t.laundry_module.col_time}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
@@ -106,9 +109,9 @@ export const LaundryModule = () => {
                           batch.status === 'ironing' ? 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400' :
                           'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400'
                         }`}>
-                          {batch.status === 'collected' ? 'Collecté' : 
-                           batch.status === 'washing' ? 'En Lavage' : 
-                           batch.status === 'ironing' ? 'Repassage' : 'Livré'}
+                          {batch.status === 'collected' ? t.laundry_module.status_collected : 
+                           batch.status === 'washing' ? t.laundry_module.status_washing : 
+                           batch.status === 'ironing' ? t.laundry_module.status_ironing : t.laundry_module.status_delivered}
                         </span>
                       </td>
                       <td className="px-4 py-3 text-slate-500">{batch.time}</td>
@@ -123,12 +126,12 @@ export const LaundryModule = () => {
         {activeTab === 'clients' && (
           <div className="space-y-6">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-bold text-lg text-slate-900 dark:text-white">Carnet Clients B2B</h3>
+              <h3 className="font-bold text-lg text-slate-900 dark:text-white">{t.laundry_module.clients_list_title}</h3>
               <div className="relative">
                 <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input 
                   type="text" 
-                  placeholder="Rechercher..." 
+                  placeholder={t.laundry_module.search_placeholder}
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
                   className="pl-9 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-xl text-sm focus:ring-2 focus:ring-slate-900 dark:focus:ring-white transition-shadow outline-none"
@@ -147,7 +150,7 @@ export const LaundryModule = () => {
                   <h4 className="font-bold text-lg text-slate-900 dark:text-white mb-2 group-hover:text-amber-500 transition-colors line-clamp-1">{building.name}</h4>
                   <div className="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-400">
                     <Shirt className="w-4 h-4 text-slate-400" />
-                    Volume Moyen: {Math.floor(Math.random() * 200) + 50} kg/jour
+                    {t.laundry_module.avg_volume}: {Math.floor(Math.random() * 200) + 50} kg/j
                   </div>
                 </div>
               ))}
@@ -160,8 +163,8 @@ export const LaundryModule = () => {
             <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-4 text-slate-400">
               <Truck className="w-8 h-8" />
             </div>
-            <h3 className="font-bold text-slate-900 dark:text-white mb-2">Tournées & Flotte</h3>
-            <p className="text-slate-500 max-w-md">L'optimisation des tournées de ramassage/livraison et la gestion de la flotte de camions seront disponibles prochainement.</p>
+            <h3 className="font-bold text-slate-900 dark:text-white mb-2">{t.laundry_module.logistics_title}</h3>
+            <p className="text-slate-500 max-w-md">{t.laundry_module.logistics_desc}</p>
           </div>
         )}
 

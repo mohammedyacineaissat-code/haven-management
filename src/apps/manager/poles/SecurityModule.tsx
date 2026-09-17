@@ -11,12 +11,14 @@ import {
 } from 'lucide-react';
 
 import { useNexiaStore } from '../../../store/useNexiaStore';
+import { useLanguageStore } from '../../../store/useLanguageStore';
 
 export const SecurityModule = () => {
   const [activeTab, setActiveTab] = useState<'sites' | 'planning' | 'cctv'>('sites');
   
   const buildings = useNexiaStore(state => state.buildings);
   const employees = useNexiaStore(state => state.employees);
+  const { t } = useLanguageStore();
   const guards = employees.filter(e => e.role === 'gardien');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -30,25 +32,25 @@ export const SecurityModule = () => {
         <div>
           <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2 mb-2">
             <ShieldCheck className="w-6 h-6 text-amber-500" />
-            Sécurité & Gardiennage
+            {t.security_module.title}
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
-            Gestion des agents de sécurité, plannings de rondes et télésurveillance.
+            {t.security_module.subtitle}
           </p>
         </div>
         
         <button className="flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold rounded-xl hover:-translate-y-0.5 transition-transform">
           <Plus className="w-4 h-4" />
-          Nouveau Site
+          {t.security_module.new_site}
         </button>
       </div>
 
       {/* Tabs */}
       <div className="flex overflow-x-auto hide-scrollbar gap-2 p-1 bg-slate-200/50 dark:bg-slate-800/50 rounded-2xl w-fit border border-slate-200/80 dark:border-slate-800/80">
         {[
-          { id: 'sites', label: 'Sites Sécurisés', icon: MapPin },
-          { id: 'planning', label: 'Planning des Rondes', icon: Clock },
-          { id: 'cctv', label: 'Incidents & CCTV', icon: Video },
+          { id: 'sites', label: t.security_module.tab_sites, icon: MapPin },
+          { id: 'planning', label: t.security_module.tab_planning, icon: Clock },
+          { id: 'cctv', label: t.security_module.tab_cctv, icon: Video },
         ].map(tab => (
           <button
             key={tab.id}
@@ -72,12 +74,12 @@ export const SecurityModule = () => {
         {activeTab === 'sites' && (
           <div className="space-y-6">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-bold text-lg text-slate-900 dark:text-white">Liste des Sites</h3>
+              <h3 className="font-bold text-lg text-slate-900 dark:text-white">{t.security_module.site_list_title}</h3>
               <div className="relative">
                 <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input 
                   type="text" 
-                  placeholder="Rechercher un site..." 
+                  placeholder={t.security_module.search_placeholder} 
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
                   className="pl-9 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-xl text-sm focus:ring-2 focus:ring-slate-900 dark:focus:ring-white transition-shadow outline-none"
@@ -97,14 +99,14 @@ export const SecurityModule = () => {
                       </div>
                       {hasAlert && (
                         <div className="flex items-center gap-1 text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-md">
-                          <AlertTriangle className="w-3 h-3" /> Incident
+                          <AlertTriangle className="w-3 h-3" /> {t.security_module.incident}
                         </div>
                       )}
                     </div>
                     <h4 className="font-bold text-slate-900 dark:text-white mb-1 group-hover:text-emerald-500 transition-colors line-clamp-1">{building.name}</h4>
                     <div className="flex items-center gap-2 text-sm text-slate-500">
                       <Users className="w-4 h-4" />
-                      {assignedGuards.length} Agent(s) déployé(s)
+                      {assignedGuards.length} {t.security_module.agents_deployed}
                     </div>
                   </div>
                 );
@@ -115,15 +117,15 @@ export const SecurityModule = () => {
 
         {activeTab === 'planning' && (
           <div className="space-y-6">
-            <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-4">Planning du Jour</h3>
+            <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-4">{t.security_module.planning_title}</h3>
             <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
               <table className="w-full text-left text-sm">
                 <thead className="bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
                   <tr>
-                    <th className="px-4 py-3 font-semibold">Agent</th>
-                    <th className="px-4 py-3 font-semibold">Site</th>
-                    <th className="px-4 py-3 font-semibold">Horaire</th>
-                    <th className="px-4 py-3 font-semibold">Statut</th>
+                    <th className="px-4 py-3 font-semibold">{t.security_module.col_agent}</th>
+                    <th className="px-4 py-3 font-semibold">{t.security_module.col_site}</th>
+                    <th className="px-4 py-3 font-semibold">{t.security_module.col_schedule}</th>
+                    <th className="px-4 py-3 font-semibold">{t.security_module.col_status}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
@@ -138,7 +140,7 @@ export const SecurityModule = () => {
                           {guard.firstName} {guard.lastName}
                         </td>
                         <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
-                          {assignedBuilding ? assignedBuilding.name : 'En réserve'}
+                          {assignedBuilding ? assignedBuilding.name : t.security_module.status_reserve}
                         </td>
                         <td className="px-4 py-3 text-slate-600 dark:text-slate-300">
                           {guard.status === 'active' ? '08:00 - 16:00' : '-'}
@@ -148,7 +150,7 @@ export const SecurityModule = () => {
                             guard.status === 'active' ? 'bg-emerald-100 text-emerald-700' :
                             'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
                           }`}>
-                            {guard.status === 'active' ? 'En poste' : 'Congé / Repos'}
+                            {guard.status === 'active' ? t.security_module.status_on_duty : t.security_module.status_off}
                           </span>
                         </td>
                       </tr>
@@ -156,7 +158,7 @@ export const SecurityModule = () => {
                   })}
                   {guards.length === 0 && (
                     <tr>
-                      <td colSpan={4} className="px-4 py-8 text-center text-slate-500">Aucun agent de sécurité enregistré.</td>
+                      <td colSpan={4} className="px-4 py-8 text-center text-slate-500">{t.security_module.no_agents}</td>
                     </tr>
                   )}
                 </tbody>
@@ -170,8 +172,8 @@ export const SecurityModule = () => {
             <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-4 text-slate-400">
               <Video className="w-8 h-8" />
             </div>
-            <h3 className="font-bold text-slate-900 dark:text-white mb-2">Module Télésurveillance en développement</h3>
-            <p className="text-slate-500 max-w-md">L'intégration des flux CCTV et des rapports d'incidents de sécurité sera disponible dans la prochaine mise à jour.</p>
+            <h3 className="font-bold text-slate-900 dark:text-white mb-2">{t.security_module.cctv_wip_title}</h3>
+            <p className="text-slate-500 max-w-md">{t.security_module.cctv_wip_desc}</p>
           </div>
         )}
       </div>

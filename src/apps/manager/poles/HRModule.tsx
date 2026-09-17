@@ -21,11 +21,11 @@ export const HRModule = () => {
 
   const getRoleLabel = (role: string) => {
     switch(role) {
-      case 'gardien': return 'Gardien de sécurité';
-      case 'cleaner': return 'Agent de nettoyage';
-      case 'technician': return 'Technicien de maintenance';
-      case 'manager': return 'Gérant / Superviseur';
-      case 'laundry_operator': return 'Opérateur Blanchisserie';
+      case 'gardien': return t.hr_module.role_guard;
+      case 'cleaner': return t.hr_module.role_cleaner;
+      case 'technician': return t.hr_module.role_technician;
+      case 'manager': return t.hr_module.role_manager;
+      case 'laundry_operator': return t.hr_module.role_laundry_operator;
       default: return role;
     }
   };
@@ -51,16 +51,16 @@ export const HRModule = () => {
             <div className="p-2 bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-xl">
               <Users className="w-5 h-5" />
             </div>
-            Ressources Humaines (RH)
+            {t.hr_module.title}
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
-            Gérez vos employés, agents de sécurité, techniciens et nettoyeurs.
+            {t.hr_module.subtitle}
           </p>
         </div>
 
         <button className="py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-bold flex items-center gap-2 transition-colors shadow-sm shadow-emerald-500/20">
           <Plus className="w-4 h-4" />
-          <span>Ajouter un employé</span>
+          <span>{t.hr_module.add_employee}</span>
         </button>
       </div>
 
@@ -69,7 +69,7 @@ export const HRModule = () => {
         {/* Total Employees */}
         <div className="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 flex items-center justify-between">
           <div>
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Total Effectif</p>
+            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">{t.hr_module.total_employees}</p>
             <h3 className="text-3xl font-black text-slate-900 dark:text-white">{employees.length}</h3>
           </div>
           <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-slate-600 dark:text-slate-400">
@@ -80,7 +80,7 @@ export const HRModule = () => {
         {/* Monthly Payroll Estimate */}
         <div className="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 flex items-center justify-between md:col-span-2">
           <div>
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Masse Salariale Estimée (Mois)</p>
+            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">{t.hr_module.estimated_payroll}</p>
             <h3 className="text-3xl font-black text-slate-900 dark:text-white font-mono">
               {employees.reduce((sum, emp) => sum + (emp.salary || 0), 0).toLocaleString()} DA
             </h3>
@@ -99,7 +99,7 @@ export const HRModule = () => {
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input 
               type="text" 
-              placeholder="Rechercher un employé..." 
+              placeholder={t.hr_module.search_placeholder}
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               className="w-full pl-9 pr-4 py-2 text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-xl text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500"
@@ -111,12 +111,12 @@ export const HRModule = () => {
             onChange={e => setFilterRole(e.target.value)}
             className="w-full sm:w-auto px-4 py-2 text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-xl text-slate-900 dark:text-white font-semibold focus:ring-2 focus:ring-emerald-500"
           >
-            <option value="all">Tous les postes</option>
-            <option value="gardien">Gardiens de sécurité</option>
-            <option value="cleaner">Agents de nettoyage</option>
-            <option value="technician">Techniciens</option>
-            <option value="manager">Gérants</option>
-            <option value="laundry_operator">Opérateurs Blanchisserie</option>
+            <option value="all">{t.hr_module.filter_all_roles}</option>
+            <option value="gardien">{t.hr_module.role_guard}</option>
+            <option value="cleaner">{t.hr_module.role_cleaner}</option>
+            <option value="technician">{t.hr_module.role_technician}</option>
+            <option value="manager">{t.hr_module.role_manager}</option>
+            <option value="laundry_operator">{t.hr_module.role_laundry_operator}</option>
           </select>
         </div>
 
@@ -125,12 +125,12 @@ export const HRModule = () => {
           <table className="w-full text-left">
             <thead>
               <tr className="bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
-                <th className="py-3 px-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Employé</th>
-                <th className="py-3 px-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Contact</th>
-                <th className="py-3 px-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Poste</th>
-                <th className="py-3 px-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Contrat & Salaire</th>
-                <th className="py-3 px-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Affectation</th>
-                <th className="py-3 px-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Actions</th>
+                <th className="py-3 px-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{t.hr_module.col_employee}</th>
+                <th className="py-3 px-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{t.hr_module.col_contact}</th>
+                <th className="py-3 px-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{t.hr_module.col_role}</th>
+                <th className="py-3 px-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{t.hr_module.col_contract_salary}</th>
+                <th className="py-3 px-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{t.hr_module.col_assignment}</th>
+                <th className="py-3 px-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">{t.hr_module.col_actions}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
@@ -177,7 +177,7 @@ export const HRModule = () => {
                           {assignedBuilding.name}
                         </div>
                       ) : (
-                        <span className="text-sm text-slate-400 italic">Non affecté</span>
+                        <span className="text-sm text-slate-400 italic">{t.hr_module.unassigned}</span>
                       )}
                     </td>
                     <td className="py-4 px-4 text-right">
@@ -187,7 +187,7 @@ export const HRModule = () => {
                         </button>
                         <button 
                           onClick={() => {
-                            if(window.confirm('Voulez-vous vraiment supprimer cet employé ?')) {
+                            if(window.confirm(t.hr_module.delete_confirm)) {
                               deleteEmployee(emp.id);
                             }
                           }}
@@ -204,7 +204,7 @@ export const HRModule = () => {
               {filteredEmployees.length === 0 && (
                 <tr>
                   <td colSpan={6} className="py-12 text-center text-slate-500">
-                    Aucun employé trouvé.
+                    {t.hr_module.no_employees}
                   </td>
                 </tr>
               )}
