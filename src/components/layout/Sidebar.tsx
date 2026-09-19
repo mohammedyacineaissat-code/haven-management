@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { useNexiaStore } from '../../store/useNexiaStore';
 import { useLanguageStore } from '../../store/useLanguageStore';
 import { 
@@ -17,23 +18,21 @@ import { ThemeToggle } from './ThemeToggle';
 import { LanguageSwitcher } from './LanguageSwitcher';
 
 interface SidebarProps {
-  activeModule: 'dashboard' | 'property' | 'security' | 'cleaning' | 'laundry' | 'hr' | 'settings';
-  setActiveModule: (module: any) => void;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ activeModule, setActiveModule, isOpen, setIsOpen }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const { t } = useLanguageStore();
   const { managerProfile, logoutManager } = useNexiaStore();
 
   const navItems = [
-    { id: 'dashboard', label: t.nexia_manager.module_dashboard, icon: LayoutDashboard },
-    { id: 'property', label: t.nexia_manager.module_property, icon: Building2 },
-    { id: 'hr', label: t.nexia_manager.module_hr, icon: Users },
-    { id: 'security', label: t.nexia_manager.module_security, icon: ShieldCheck },
-    { id: 'cleaning', label: t.nexia_manager.module_cleaning, icon: Droplets },
-    { id: 'laundry', label: t.nexia_manager.module_laundry, icon: Shirt },
+    { id: 'dashboard', path: '/', label: t.nexia_manager.module_dashboard, icon: LayoutDashboard },
+    { id: 'property', path: '/property', label: t.nexia_manager.module_property, icon: Building2 },
+    { id: 'hr', path: '/hr', label: t.nexia_manager.module_hr, icon: Users },
+    { id: 'security', path: '/security', label: t.nexia_manager.module_security, icon: ShieldCheck },
+    { id: 'cleaning', path: '/cleaning', label: t.nexia_manager.module_cleaning, icon: Droplets },
+    { id: 'laundry', path: '/laundry', label: t.nexia_manager.module_laundry, icon: Shirt },
   ];
 
   return (
@@ -56,17 +55,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeModule, setActiveModule,
         {/* Logo Area */}
         <div className="h-20 flex items-center justify-between px-6 border-b border-slate-200 dark:border-slate-800 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-slate-900 dark:bg-slate-800 text-amber-500 flex items-center justify-center shadow-md border border-slate-800/50">
-              <span className="font-bold text-xl">N</span>
-            </div>
-            <div>
-              <h1 className="font-bold text-lg leading-tight text-slate-900 dark:text-white tracking-tight">
-                NEXIA Solution
-              </h1>
-              <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Facility Management</span>
-            </div>
+            <img src="/assets/logo.png" alt="NEXIA Solution Logo" className="h-10 w-auto object-contain" />
           </div>
-          <button onClick={() => setIsOpen(false)} className="lg:hidden text-slate-500 hover:text-slate-900 dark:hover:text-white">
+          <button aria-label={t.common?.close || 'Close'} onClick={() => setIsOpen(false)} className="lg:hidden text-slate-500 hover:text-slate-900 dark:hover:text-white">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -77,24 +68,25 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeModule, setActiveModule,
           
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = activeModule === item.id;
             
             return (
-              <button
+              <NavLink
                 key={item.id}
-                onClick={() => {
-                  setActiveModule(item.id as any);
-                  setIsOpen(false);
-                }}
-                className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 text-left ${
+                to={item.path}
+                onClick={() => setIsOpen(false)}
+                className={({ isActive }) => `w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 text-left ${
                   isActive 
                     ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold shadow-md' 
                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
-                <Icon className={`w-5 h-5 ${isActive ? 'text-amber-500 dark:text-amber-600' : ''}`} />
-                <span className="text-sm">{item.label}</span>
-              </button>
+                {({ isActive }) => (
+                  <>
+                    <Icon className={`w-5 h-5 ${isActive ? 'text-amber-500 dark:text-amber-600' : ''}`} />
+                    <span className="text-sm">{item.label}</span>
+                  </>
+                )}
+              </NavLink>
             );
           })}
         </nav>

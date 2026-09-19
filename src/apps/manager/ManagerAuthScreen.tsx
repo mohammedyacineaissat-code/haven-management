@@ -117,12 +117,7 @@ export const ManagerAuthScreen: React.FC<ManagerAuthScreenProps> = () => {
       {/* Top Bar with Language & Theme Controls */}
       <div className="w-full max-w-md flex items-center justify-between mb-6 px-1">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-white font-black text-sm flex items-center justify-center shadow-md shadow-emerald-500/20">
-            H
-          </div>
-          <span className="text-sm font-black tracking-tight text-slate-800 dark:text-slate-200">
-            HAVEN <span className="text-emerald-600 dark:text-emerald-400 font-bold">MANAGER</span>
-          </span>
+          <img src="/assets/logo.png" alt="NEXIA Solution Logo" className="h-8 w-auto object-contain" />
         </div>
 
         <div className="flex items-center gap-2">
