@@ -1,13 +1,17 @@
 import { create } from 'zustand';
 import { Language, Direction, Translations } from '../i18n/types';
-import { TRANSLATIONS } from '../i18n/translations';
+
+// Fallback empty translation before the correct one loads
+const emptyTranslations = {} as Translations;
 
 interface LanguageState {
   currentLanguage: Language;
   dir: Direction;
   isRtl: boolean;
   t: Translations;
-  setLanguage: (lang: Language) => void;
+  isLoaded: boolean;
+  setLanguage: (lang: Language) => Promise<void>;
+  initLanguage: () => Promise<void>;
 }
 
 const getInitialLanguage = (): Language => {
@@ -32,13 +36,19 @@ if (typeof document !== 'undefined') {
   document.documentElement.lang = initialLang;
 }
 
-export const useLanguageStore = create<LanguageState>((set) => ({
+export const useLanguageStore = create<LanguageState>((set, get) => ({
   currentLanguage: initialLang,
   dir: initialDir,
   isRtl: initialDir === 'rtl',
-  t: TRANSLATIONS[initialLang],
+  t: emptyTranslations,
+  isLoaded: false,
 
-  setLanguage: (lang: Language) => {
+  initLanguage: async () => {
+    if (get().isLoaded) return;
+    await get().setLanguage(initialLang);
+  },
+
+  setLanguage: async (lang: Language) => {
     const isRtl = lang === 'ar';
     const dir: Direction = isRtl ? 'rtl' : 'ltr';
 
@@ -52,12 +62,23 @@ export const useLanguageStore = create<LanguageState>((set) => ({
     } catch {
       // Ignore storage errors in sandbox
     }
+    
+    // Dynamically import the translation file
+    let newTranslations: Translations;
+    if (lang === 'en') {
+      newTranslations = (await import('../i18n/en')).default;
+    } else if (lang === 'ar') {
+      newTranslations = (await import('../i18n/ar')).default;
+    } else {
+      newTranslations = (await import('../i18n/fr')).default;
+    }
 
     set({
       currentLanguage: lang,
       dir,
       isRtl,
-      t: TRANSLATIONS[lang],
+      t: newTranslations,
+      isLoaded: true
     });
   },
 }));

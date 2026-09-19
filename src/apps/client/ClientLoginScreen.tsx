@@ -162,7 +162,7 @@ export const ClientLoginScreen: React.FC<ClientLoginScreenProps> = ({
       <div>
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2.5">
-            <img src="/assets/logo.png" alt="NEXIA Solution Logo" className="h-10 w-auto object-contain" />
+            <img src="/assets/logo.png" alt="NEXIA Solution Logo" className="h-14 w-auto object-contain" />
             <div>
               <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold block uppercase tracking-wider">Espace Résidents</span>
             </div>

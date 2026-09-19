@@ -1,6 +1,6 @@
 {
-  "appId": "com.haven.residence",
-  "appName": "Haven Résidence",
+  "appId": "com.nexia.solution",
+  "appName": "Nexia Solution",
   "webDir": "dist",
   "server": {
     "androidScheme": "https",

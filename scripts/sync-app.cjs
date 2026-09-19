@@ -6,8 +6,8 @@ const rootDir = path.resolve(__dirname, '..');
 const target = process.argv[2] === 'manager' ? 'manager' : 'resident';
 
 const isManager = target === 'manager';
-const appId = isManager ? 'com.haven.manager' : 'com.haven.resident';
-const appName = isManager ? 'Haven Syndic' : 'Haven Résidents';
+const appId = isManager ? 'com.nexia.manager' : 'com.nexia.resident';
+const appName = isManager ? 'Nexia Manager' : 'Nexia Résident';
 const configFile = isManager ? 'capacitor.manager.config.ts' : 'capacitor.resident.config.ts';
 
 console.log(`\n========================================`);

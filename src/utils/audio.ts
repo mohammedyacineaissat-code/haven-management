@@ -1,5 +1,5 @@
 // Web Audio API sound generator for building alerts and notifications
-export const playAlertSound = (type: 'critical' | 'update' | 'resolved' | 'click') => {
+export const playAlertSound = (type: 'critical' | 'warning' | 'info' | 'update' | 'resolved' | 'click') => {
   try {
     const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     if (!AudioContextClass) return;
@@ -50,7 +50,7 @@ export const playAlertSound = (type: 'critical' | 'update' | 'resolved' | 'click
         osc.start(now + (i * 0.08));
         osc.stop(now + (i * 0.08) + 0.45);
       });
-    } else if (type === 'update') {
+    } else if (type === 'update' || type === 'warning' || type === 'info') {
       // Soft modern notification chime
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();

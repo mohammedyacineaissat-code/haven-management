@@ -10,8 +10,12 @@ import { Capacitor } from '@capacitor/core';
 
 export function App() {
   const { initializeData } = useNexiaStore();
-  const { t } = useLanguageStore();
+  const { t, isLoaded, initLanguage } = useLanguageStore();
   const { initTheme } = useThemeStore();
+  
+  useEffect(() => {
+    initLanguage();
+  }, [initLanguage]);
   
   // Initialize store and check URL parameters on load
   useEffect(() => {
@@ -47,6 +51,8 @@ export function App() {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, [initializeData, initTheme]);
+
+  if (!isLoaded) return null;
 
   // If building a specific target via Vite build (for Capacitor APKs)
   const appTarget = import.meta.env.VITE_APP_TARGET;

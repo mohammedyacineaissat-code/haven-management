@@ -3,6 +3,7 @@ import { useNexiaStore } from '../../store/useNexiaStore';
 import { useLanguageStore } from '../../store/useLanguageStore';
 import { FixedCharge, FixedChargeCategory } from '../../types/building';
 import { AddFixedChargeModal } from './AddFixedChargeModal';
+import { ConfirmModal } from '../ui/ConfirmModal';
 import { 
   Wallet, 
   Plus, 
@@ -39,6 +40,7 @@ export const FixedChargesTab: React.FC<FixedChargesTabProps> = ({
   const [filterCategory, setFilterCategory] = useState<FixedChargeCategory | 'all'>('all');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingCharge, setEditingCharge] = useState<FixedCharge | null>(null);
+  const [chargeToDelete, setChargeToDelete] = useState<string | null>(null);
 
   const charges = fixedCharges[buildingId] || [];
 
@@ -281,11 +283,7 @@ export const FixedChargesTab: React.FC<FixedChargesTabProps> = ({
                         <Edit2 className="w-3.5 h-3.5" />
                       </button>
                       <button
-                        onClick={() => {
-                          if (window.confirm(t.fixed_charges.delete_confirm)) {
-                            deleteFixedCharge(buildingId, charge.id);
-                          }
-                        }}
+                        onClick={() => setChargeToDelete(charge.id)}
                         title={t.common.cancel}
                         className="p-1.5 text-slate-400 hover:text-rose-500 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
                       >
@@ -362,6 +360,19 @@ export const FixedChargesTab: React.FC<FixedChargesTabProps> = ({
           initialCharge={editingCharge}
         />
       )}
+
+      <ConfirmModal
+        isOpen={!!chargeToDelete}
+        title={t.fixed_charges.delete_confirm}
+        message="Êtes-vous sûr de vouloir supprimer cette charge ?"
+        onConfirm={async () => {
+          if (chargeToDelete) {
+            await deleteFixedCharge(buildingId, chargeToDelete);
+            setChargeToDelete(null);
+          }
+        }}
+        onCancel={() => setChargeToDelete(null)}
+      />
     </div>
   );
 };

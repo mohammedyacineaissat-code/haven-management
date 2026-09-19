@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import App from './App.tsx';
 import './index.css';
+import { BrowserRouter } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 // Remove the startup fallback loading indicator once React mounts
 const removeFallback = () => {
@@ -20,7 +22,10 @@ try {
   root.render(
     <StrictMode>
       <ErrorBoundary>
-        <App />
+        <BrowserRouter>
+          <App />
+          <Toaster position="top-right" />
+        </BrowserRouter>
       </ErrorBoundary>
     </StrictMode>,
   );
@@ -28,7 +33,7 @@ try {
   // Hide the loading fallback after a short delay to ensure React has mounted
   setTimeout(removeFallback, 100);
 } catch (err) {
-  console.error('[Haven] Failed to initialize React app:', err);
+  console.error('[Nexia Solution] Failed to initialize React app:', err);
   const fallback = document.getElementById('startup-fallback');
   if (fallback) {
     fallback.innerHTML = `

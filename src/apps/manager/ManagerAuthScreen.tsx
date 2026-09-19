@@ -117,7 +117,7 @@ export const ManagerAuthScreen: React.FC<ManagerAuthScreenProps> = () => {
       {/* Top Bar with Language & Theme Controls */}
       <div className="w-full max-w-md flex items-center justify-between mb-6 px-1">
         <div className="flex items-center gap-2">
-          <img src="/assets/logo.png" alt="NEXIA Solution Logo" className="h-8 w-auto object-contain" />
+          <img src="/assets/logo.png" alt="NEXIA Solution Logo" className="h-14 w-auto object-contain" />
         </div>
 
         <div className="flex items-center gap-2">

@@ -55,7 +55,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         {/* Logo Area */}
         <div className="h-20 flex items-center justify-between px-6 border-b border-slate-200 dark:border-slate-800 shrink-0">
           <div className="flex items-center gap-3">
-            <img src="/assets/logo.png" alt="NEXIA Solution Logo" className="h-10 w-auto object-contain" />
+            <img src="/assets/logo.png" alt="NEXIA Solution Logo" className="h-14 w-auto object-contain" />
           </div>
           <button aria-label={t.common?.close || 'Close'} onClick={() => setIsOpen(false)} className="lg:hidden text-slate-500 hover:text-slate-900 dark:hover:text-white">
             <X className="w-5 h-5" />

@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.haven.resident',
-  appName: 'Haven Résidents',
+  appId: 'com.nexia.resident',
+  appName: 'Nexia Résident',
   webDir: 'dist',
   server: {
     androidScheme: 'https',

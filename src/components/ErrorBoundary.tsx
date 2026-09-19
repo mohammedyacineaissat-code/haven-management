@@ -54,7 +54,7 @@ export class ErrorBoundary extends Component<Props, State> {
           }}>
             <div style={{ fontSize: '48px', marginBottom: '12px' }}>⚠️</div>
             <h1 style={{ fontSize: '20px', fontWeight: 700, marginBottom: '8px' }}>
-              Haven — Erreur
+              Nexia Solution — Erreur
             </h1>
             <p style={{ fontSize: '14px', color: '#64748B', marginBottom: '20px', lineHeight: 1.5 }}>
               L'application a rencontré une erreur inattendue. 

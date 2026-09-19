@@ -1,4 +1,5 @@
 import React, { useState, Suspense, lazy } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { Sidebar } from '../../components/layout/Sidebar';
 import { Menu, Search, Bell, Loader2 } from 'lucide-react';
 import { useNexiaStore } from '../../store/useNexiaStore';
@@ -16,10 +17,7 @@ interface ManagerAppProps {
   standalone?: boolean;
 }
 
-type ModuleType = 'dashboard' | 'property' | 'security' | 'cleaning' | 'laundry' | 'hr' | 'settings';
-
 export const ManagerApp: React.FC<ManagerAppProps> = ({ standalone = false }) => {
-  const [activeModule, setActiveModule] = useState<ModuleType>('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const { managerProfile } = useNexiaStore();
@@ -29,24 +27,10 @@ export const ManagerApp: React.FC<ManagerAppProps> = ({ standalone = false }) =>
     return <ManagerAuthScreen standalone={standalone} />;
   }
 
-  const renderContent = () => {
-    switch (activeModule) {
-      case 'dashboard': return <NexiaDashboard />;
-      case 'security': return <SecurityModule />;
-      case 'cleaning': return <CleaningModule />;
-      case 'laundry': return <LaundryModule />;
-      case 'hr': return <HRModule />;
-      case 'property': return <PropertyModule />;
-      default: return <NexiaDashboard />;
-    }
-  };
-
   return (
     <div className="flex h-screen w-full bg-slate-50 dark:bg-slate-900 overflow-hidden font-sans">
       {/* Sidebar Navigation */}
       <Sidebar 
-        activeModule={activeModule} 
-        setActiveModule={setActiveModule}
         isOpen={isSidebarOpen}
         setIsOpen={setIsSidebarOpen}
       />
@@ -63,12 +47,7 @@ export const ManagerApp: React.FC<ManagerAppProps> = ({ standalone = false }) =>
               <Menu className="w-6 h-6" />
             </button>
             <h2 className="text-xl font-bold text-slate-900 dark:text-white hidden sm:block">
-              {activeModule === 'dashboard' && t.nexia_manager.module_dashboard}
-              {activeModule === 'property' && t.nexia_manager.module_property}
-              {activeModule === 'security' && t.nexia_manager.module_security}
-              {activeModule === 'cleaning' && t.nexia_manager.module_cleaning}
-              {activeModule === 'laundry' && t.nexia_manager.module_laundry}
-              {activeModule === 'hr' && t.nexia_manager.module_hr}
+              NEXIA Manager
             </h2>
           </div>
 
@@ -120,7 +99,15 @@ export const ManagerApp: React.FC<ManagerAppProps> = ({ standalone = false }) =>
                 <Loader2 className="w-8 h-8 animate-spin" />
               </div>
             }>
-              {renderContent()}
+              <Routes>
+                <Route path="/" element={<NexiaDashboard />} />
+                <Route path="/property" element={<PropertyModule />} />
+                <Route path="/security" element={<SecurityModule />} />
+                <Route path="/cleaning" element={<CleaningModule />} />
+                <Route path="/laundry" element={<LaundryModule />} />
+                <Route path="/hr" element={<HRModule />} />
+                <Route path="*" element={<NexiaDashboard />} />
+              </Routes>
             </Suspense>
           </div>
         </main>
