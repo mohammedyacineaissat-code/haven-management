@@ -23,6 +23,7 @@ export const ar: Translations = {
       search_placeholder: 'بحث...',
       notifications: 'الإشعارات',
       no_notifications: 'لا توجد إشعارات جديدة.',
+      sidebar_section_title: 'أقطاب النشاط',
     },
     nexia_dashboard: {
       overview_title: 'نظرة عامة',

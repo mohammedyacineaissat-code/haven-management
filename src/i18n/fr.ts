@@ -23,6 +23,7 @@ export const fr: Translations = {
       search_placeholder: 'Rechercher...',
       notifications: 'Notifications',
       no_notifications: 'Aucune nouvelle notification.',
+      sidebar_section_title: 'Pôles d\'activité',
     },
     nexia_dashboard: {
       overview_title: 'Vue d\'ensemble',

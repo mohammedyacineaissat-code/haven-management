@@ -2,18 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useNexiaStore } from '../../store/useNexiaStore';
 import { useLanguageStore } from '../../store/useLanguageStore';
-import { 
-  Building2, 
-  ShieldCheck, 
-  Droplets, 
-  Shirt, 
-  LayoutDashboard,
-  Users,
-  Settings,
-  LogOut,
-  Menu,
-  X
-} from 'lucide-react';
+import { Buildings, ShieldCheck, Drop, TShirt, SquaresFour, Users, Gear, SignOut, List, X } from '@phosphor-icons/react';
 import { ThemeToggle } from './ThemeToggle';
 import { LanguageSwitcher } from './LanguageSwitcher';
 
@@ -27,12 +16,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const { managerProfile, logoutManager } = useNexiaStore();
 
   const navItems = [
-    { id: 'dashboard', path: '/', label: t.nexia_manager.module_dashboard, icon: LayoutDashboard },
-    { id: 'property', path: '/property', label: t.nexia_manager.module_property, icon: Building2 },
+    { id: 'dashboard', path: '/', label: t.nexia_manager.module_dashboard, icon: SquaresFour },
+    { id: 'property', path: '/property', label: t.nexia_manager.module_property, icon: Buildings },
     { id: 'hr', path: '/hr', label: t.nexia_manager.module_hr, icon: Users },
     { id: 'security', path: '/security', label: t.nexia_manager.module_security, icon: ShieldCheck },
-    { id: 'cleaning', path: '/cleaning', label: t.nexia_manager.module_cleaning, icon: Droplets },
-    { id: 'laundry', path: '/laundry', label: t.nexia_manager.module_laundry, icon: Shirt },
+    { id: 'cleaning', path: '/cleaning', label: t.nexia_manager.module_cleaning, icon: Drop },
+    { id: 'laundry', path: '/laundry', label: t.nexia_manager.module_laundry, icon: TShirt },
   ];
 
   return (
@@ -47,24 +36,27 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
 
       {/* Sidebar */}
       <aside className={`
-        fixed lg:static top-0 left-0 z-50 h-screen w-72 
-        bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 
-        flex flex-col transition-transform duration-300 ease-in-out
+        fixed lg:relative top-0 left-0 z-50 h-screen lg:h-[calc(100vh-2rem)] w-72 
+        lg:my-4 lg:ml-4 rounded-none lg:rounded-[2.5rem] overflow-hidden
+        bg-white/60 dark:bg-slate-900/40 backdrop-blur-3xl 
+        border-r lg:border border-white/60 dark:border-white/10 
+        shadow-apple lg:shadow-apple-lg dark:shadow-apple-dark
+        flex flex-col transition-all duration-300 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         {/* Logo Area */}
-        <div className="h-20 flex items-center justify-between px-6 border-b border-slate-200 dark:border-slate-800 shrink-0">
+        <div className="h-24 flex items-center justify-between px-8 border-b border-white/40 dark:border-white/5 shrink-0 relative z-10">
           <div className="flex items-center gap-3 w-full">
-            <img src="/assets/logo.png" alt="NEXIA Solution Logo" className="w-44 h-auto object-contain" />
+            <img src="/assets/logo.png" alt="NEXIA Solution Logo" className="w-40 h-auto object-contain drop-shadow-sm" />
           </div>
-          <button aria-label={t.common?.close || 'Close'} onClick={() => setIsOpen(false)} className="lg:hidden text-slate-500 hover:text-slate-900 dark:hover:text-white">
-            <X className="w-5 h-5" />
+          <button aria-label={t.common?.close || 'Close'} onClick={() => setIsOpen(false)} className="lg:hidden p-2 rounded-full bg-white/50 dark:bg-slate-800/50 text-slate-500 hover:text-slate-900 dark:hover:text-white">
+            <X weight="duotone" className="w-5 h-5" />
           </button>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto p-4 space-y-1">
-          <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">Pôles d'activité</div>
+        <nav className="flex-1 overflow-y-auto p-5 space-y-1 relative z-10">
+          <div className="px-3 pb-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">{t.nexia_manager.sidebar_section_title || 'Pôles d\'activité'}</div>
           
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -74,16 +66,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                 key={item.id}
                 to={item.path}
                 onClick={() => setIsOpen(false)}
-                className={({ isActive }) => `w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 text-left ${
+                className={({ isActive }) => `w-full flex items-center gap-3.5 px-4 py-3.5 rounded-[1.25rem] transition-all duration-300 text-left group relative overflow-hidden ${
                   isActive 
-                    ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold shadow-md' 
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
+                    ? 'bg-white dark:bg-slate-800 text-brand-600 dark:text-brand-400 shadow-apple-glass dark:shadow-apple-glass-dark font-bold' 
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white hover:translate-x-1 font-medium'
                 }`}
               >
                 {({ isActive }) => (
                   <>
-                    <Icon className={`w-5 h-5 ${isActive ? 'text-amber-500 dark:text-amber-600' : ''}`} />
-                    <span className="text-sm">{item.label}</span>
+                    {isActive && <div className="absolute left-0 top-0 bottom-0 w-1 bg-brand-500 rounded-r-full"></div>}
+                    <Icon className={`w-5 h-5 transition-transform duration-300 group-hover:scale-110 ${isActive ? 'text-brand-500 drop-shadow-sm' : ''}`} />
+                    <span className="text-sm tracking-tight">{item.label}</span>
                   </>
                 )}
               </NavLink>
@@ -92,15 +85,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         </nav>
 
         {/* Footer Area */}
-        <div className="p-4 border-t border-slate-200 dark:border-slate-800 shrink-0 bg-slate-50 dark:bg-slate-900/50">
-          <div className="flex items-center justify-between mb-4">
+        <div className="p-5 border-t border-white/40 dark:border-white/5 shrink-0 bg-white/30 dark:bg-slate-900/30 backdrop-blur-xl relative z-10">
+          <div className="flex items-center justify-between mb-5 px-2">
             <ThemeToggle />
             <LanguageSwitcher compact />
           </div>
           
-          <div className="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm">
-            <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center shrink-0">
-              <Users className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+          <div className="flex items-center gap-3 p-3.5 rounded-[1.5rem] bg-white/70 dark:bg-slate-800/70 border border-white/50 dark:border-white/10 shadow-apple-glass dark:shadow-apple-glass-dark backdrop-blur-md">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-500 to-sky-400 flex items-center justify-center shrink-0 shadow-glow-brand">
+              <Users weight="duotone" className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-slate-900 dark:text-white truncate">
@@ -113,7 +106,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
               className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-lg transition-colors"
               title="Déconnexion"
             >
-              <LogOut className="w-4 h-4" />
+              <SignOut weight="duotone" className="w-4 h-4" />
             </button>
           </div>
         </div>

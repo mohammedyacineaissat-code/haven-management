@@ -2,20 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNexiaStore } from '../../store/useNexiaStore';
 import { useLanguageStore } from '../../store/useLanguageStore';
 import { FixedCharge, FixedChargeCategory } from '../../types/building';
-import { 
-  X, 
-  Wallet, 
-  UserCheck, 
-  FileText, 
-  Zap, 
-  Wrench, 
-  Coins, 
-  Building2,
-  Calendar,
-  Save,
-  AlertCircle,
-  Trash2
-} from 'lucide-react';
+import { X, Wallet, UserCheck, FileText, Lightning, Wrench, Coins, Buildings, Calendar, FloppyDisk, WarningCircle, Trash } from '@phosphor-icons/react';
 
 interface AddFixedChargeModalProps {
   isOpen: boolean;
@@ -103,7 +90,7 @@ export const AddFixedChargeModal: React.FC<AddFixedChargeModalProps> = ({
   const categories: { id: FixedChargeCategory; label: string; icon: any }[] = [
     { id: 'salary', label: t.fixed_charges.cat_salary, icon: UserCheck },
     { id: 'contract', label: t.fixed_charges.cat_contract, icon: FileText },
-    { id: 'utility', label: t.fixed_charges.cat_utility, icon: Zap },
+    { id: 'utility', label: t.fixed_charges.cat_utility, icon: Lightning },
     { id: 'maintenance', label: t.fixed_charges.cat_maintenance, icon: Wrench },
     { id: 'other', label: t.fixed_charges.cat_other, icon: Coins },
   ];
@@ -118,7 +105,7 @@ export const AddFixedChargeModal: React.FC<AddFixedChargeModalProps> = ({
         <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
-              <Wallet className="w-5 h-5" />
+              <Wallet weight="duotone" className="w-5 h-5" />
             </div>
             <div>
               <h2 className="text-lg font-bold text-slate-900 dark:text-white">
@@ -133,14 +120,14 @@ export const AddFixedChargeModal: React.FC<AddFixedChargeModalProps> = ({
             onClick={onClose}
             className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X weight="duotone" className="w-5 h-5" />
           </button>
         </div>
 
         {/* Error Alert */}
         {error && (
           <div className="mx-6 mt-4 p-3 rounded-2xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/50 text-rose-800 dark:text-rose-300 text-xs flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
+            <WarningCircle weight="duotone" className="w-4 h-4 shrink-0 text-rose-600" />
             <span>{error}</span>
           </div>
         )}
@@ -271,7 +258,7 @@ export const AddFixedChargeModal: React.FC<AddFixedChargeModalProps> = ({
                   }}
                   className="px-4 py-2.5 rounded-2xl text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/10 flex items-center gap-2 transition-colors"
                 >
-                  <Trash2 className="w-4 h-4" />
+                  <Trash weight="duotone" className="w-4 h-4" />
                   <span>{t.common.delete || 'Supprimer'}</span>
                 </button>
               )}
@@ -288,7 +275,7 @@ export const AddFixedChargeModal: React.FC<AddFixedChargeModalProps> = ({
                 type="submit"
                 className="px-6 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white text-xs font-bold shadow-lg shadow-emerald-500/25 flex items-center gap-2 transition-all"
               >
-                <Save className="w-4 h-4" />
+                <FloppyDisk weight="duotone" className="w-4 h-4" />
                 <span>{t.fixed_charges.save_btn}</span>
               </button>
             </div>

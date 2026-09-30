@@ -1,14 +1,5 @@
 import React, { useState } from 'react';
-import { 
-  Droplets, 
-  MapPin, 
-  Users, 
-  Clock, 
-  Search,
-  Plus,
-  ClipboardCheck,
-  CheckCircle2
-} from 'lucide-react';
+import { Drop, MapPin, Users, Clock, MagnifyingGlass, Plus, ClipboardText, CheckCircle } from '@phosphor-icons/react';
 
 import { useNexiaStore } from '../../../store/useNexiaStore';
 import { useLanguageStore } from '../../../store/useLanguageStore';
@@ -31,7 +22,7 @@ export const CleaningModule = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
         <div>
           <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2 mb-2">
-            <Droplets className="w-6 h-6 text-amber-500" />
+            <Drop weight="duotone" className="w-6 h-6 text-amber-500" />
             {t.cleaning_module.title}
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
@@ -40,7 +31,7 @@ export const CleaningModule = () => {
         </div>
         
         <button className="flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold rounded-xl hover:-translate-y-0.5 transition-transform">
-          <Plus className="w-4 h-4" />
+          <Plus weight="duotone" className="w-4 h-4" />
           {t.cleaning_module.new_contract}
         </button>
       </div>
@@ -49,7 +40,7 @@ export const CleaningModule = () => {
       <div className="flex overflow-x-auto hide-scrollbar gap-2 p-1 bg-slate-200/50 dark:bg-slate-800/50 rounded-2xl w-fit border border-slate-200/80 dark:border-slate-800/80">
         {[
           { id: 'sites', label: t.cleaning_module.tab_sites, icon: MapPin },
-          { id: 'planning', label: t.cleaning_module.tab_planning, icon: ClipboardCheck },
+          { id: 'planning', label: t.cleaning_module.tab_planning, icon: ClipboardText },
           { id: 'inventory', label: t.cleaning_module.tab_inventory, icon: Clock },
         ].map(tab => (
           <button
@@ -76,7 +67,7 @@ export const CleaningModule = () => {
             <div className="flex justify-between items-center mb-4">
               <h3 className="font-bold text-lg text-slate-900 dark:text-white">{t.cleaning_module.contracts_list_title}</h3>
               <div className="relative">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <MagnifyingGlass weight="duotone" className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input 
                   type="text" 
                   placeholder={t.cleaning_module.search_placeholder}
@@ -94,17 +85,17 @@ export const CleaningModule = () => {
                   <div key={building.id} className="p-4 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-500 transition-colors group cursor-pointer bg-white dark:bg-slate-900">
                     <div className="flex justify-between items-start mb-3">
                       <div className="p-2 rounded-lg bg-sky-100 text-sky-600 dark:bg-sky-500/20 dark:text-sky-400">
-                        <Droplets className="w-5 h-5" />
+                        <Drop weight="duotone" className="w-5 h-5" />
                       </div>
                     </div>
                     <h4 className="font-bold text-slate-900 dark:text-white mb-1 group-hover:text-amber-500 transition-colors line-clamp-1">{building.name}</h4>
                     <div className="flex flex-col gap-1 text-sm text-slate-500 mt-2">
                       <div className="flex items-center gap-2">
-                        <Users className="w-4 h-4" />
+                        <Users weight="duotone" className="w-4 h-4" />
                         {assignedCleaners.length} {t.cleaning_module.agents_count}
                       </div>
                       <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4" />
+                        <Clock weight="duotone" className="w-4 h-4" />
                         {t.cleaning_module.schedule_daily}
                       </div>
                     </div>
@@ -163,7 +154,7 @@ export const CleaningModule = () => {
         {activeTab === 'inventory' && (
           <div className="flex flex-col items-center justify-center h-64 text-center">
             <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-4 text-slate-400">
-              <ClipboardCheck className="w-8 h-8" />
+              <ClipboardText weight="duotone" className="w-8 h-8" />
             </div>
             <h3 className="font-bold text-slate-900 dark:text-white mb-2">{t.cleaning_module.inventory_title}</h3>
             <p className="text-slate-500 max-w-md">{t.cleaning_module.inventory_desc}</p>

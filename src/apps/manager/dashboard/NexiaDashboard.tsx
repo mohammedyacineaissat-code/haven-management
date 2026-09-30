@@ -1,34 +1,43 @@
 import React from 'react';
 import { useNexiaStore } from '../../../store/useNexiaStore';
 import { useLanguageStore } from '../../../store/useLanguageStore';
-import { 
-  Building2, 
-  ShieldCheck, 
-  Droplets, 
-  Shirt, 
-  TrendingUp, 
-  Users, 
-  AlertCircle,
-  ArrowUpRight,
-  Clock,
-  CheckCircle,
-  Activity
-} from 'lucide-react';
+import { Buildings, ShieldCheck, Drop, TShirt, TrendUp, Users, WarningCircle, ArrowUpRight, Clock, CheckCircle, Pulse } from '@phosphor-icons/react';
+import { motion } from 'framer-motion';
 
-const KpiCard = ({ title, value, change, icon: Icon, colorClass }: any) => (
-  <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col hover:-translate-y-1 transition-transform duration-300">
-    <div className="flex justify-between items-start mb-4">
-      <div className={`p-3 rounded-2xl ${colorClass}`}>
+const KpiCard = ({ title, value, change, icon: Icon, colorClass, sparklineColor, delay = 0 }: any) => (
+  <motion.div 
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, delay, ease: [0.23, 1, 0.32, 1] }}
+    whileHover={{ y: -6, scale: 1.02 }}
+    className="bg-white/80 dark:bg-slate-900/60 backdrop-blur-3xl rounded-[2.5rem] p-7 border border-white/60 dark:border-white/10 shadow-apple hover:shadow-apple-hover dark:shadow-apple-dark dark:hover:shadow-apple-dark-hover flex flex-col relative overflow-hidden group transition-all duration-500"
+  >
+    <div className="flex justify-between items-start mb-6 relative z-10">
+      <div className={`p-4 rounded-[1.5rem] ${colorClass} shadow-sm`}>
         <Icon className="w-6 h-6" />
       </div>
       <span className="flex items-center text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-1 rounded-full">
-        <ArrowUpRight className="w-3 h-3 mr-1" />
+        <ArrowUpRight weight="duotone" className="w-3 h-3 mr-1" />
         {change}
       </span>
     </div>
-    <h3 className="text-slate-500 dark:text-slate-400 text-sm font-semibold mb-1">{title}</h3>
-    <p className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">{value}</p>
-  </div>
+    <h3 className="text-slate-500 dark:text-slate-400 text-sm font-semibold mb-1 relative z-10">{title}</h3>
+    <motion.p 
+      initial={{ opacity: 0, filter: 'blur(4px)' }}
+      animate={{ opacity: 1, filter: 'blur(0px)' }}
+      transition={{ duration: 0.6, delay: delay + 0.2 }}
+      className="text-3xl font-black text-slate-900 dark:text-white tracking-tight relative z-10"
+    >
+      {value}
+    </motion.p>
+    
+    {/* Sparkline background */}
+    <div className="absolute bottom-0 left-0 w-full h-16 opacity-10 dark:opacity-[0.15] group-hover:opacity-20 dark:group-hover:opacity-30 transition-opacity pointer-events-none">
+      <svg viewBox="0 0 100 30" preserveAspectRatio="none" className="w-full h-full">
+        <path d="M0,30 L0,20 C20,25 40,10 60,15 C80,20 90,5 100,0 L100,30 Z" fill={sparklineColor} />
+      </svg>
+    </div>
+  </motion.div>
 );
 
 export const NexiaDashboard = () => {
@@ -45,18 +54,18 @@ export const NexiaDashboard = () => {
   const today = new Date();
   const currentPeriod = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
 
-  // Dynamic Recent Activity from resolved incidents
+  // Dynamic Recent Pulse from resolved incidents
   const recentActivity = resolvedIncidents.slice(0, 5).map((inc: any) => {
-    let Icon = AlertCircle;
+    let Icon = WarningCircle;
     let color = 'text-slate-500';
     let bg = 'bg-slate-50 dark:bg-slate-500/10';
     
     if (inc.category === 'water') {
-      Icon = Droplets; color = 'text-sky-500'; bg = 'bg-sky-50 dark:bg-sky-500/10';
+      Icon = Drop; color = 'text-sky-500'; bg = 'bg-sky-50 dark:bg-sky-500/10';
     } else if (inc.category === 'security') {
       Icon = ShieldCheck; color = 'text-amber-500'; bg = 'bg-amber-50 dark:bg-amber-500/10';
     } else if (inc.category === 'power') {
-      Icon = Activity; color = 'text-indigo-500'; bg = 'bg-indigo-50 dark:bg-indigo-500/10';
+      Icon = Pulse; color = 'text-indigo-500'; bg = 'bg-indigo-50 dark:bg-indigo-500/10';
     }
 
     return {
@@ -107,38 +116,46 @@ const chartData = React.useMemo(() => {
         <KpiCard 
           title={t.nexia_dashboard.kpi_revenue} 
           value={`${totalRevenue.toLocaleString()} DA`} 
-          change="+14%" 
-          icon={TrendingUp} 
+          change={totalRevenue > 0 ? `${buildings.length} bldg` : '—'} 
+          icon={TrendUp} 
           colorClass="bg-amber-100 text-amber-600 dark:bg-amber-500/20 dark:text-amber-400"
+          sparklineColor="#f59e0b"
+          delay={0.1}
         />
         <KpiCard 
           title={t.nexia_dashboard.kpi_contracts} 
           value={activeContracts.toString()} 
-          change="+3" 
-          icon={Building2} 
+          change={`${buildings.filter(b => b.status === 'operational').length} actifs`} 
+          icon={Buildings} 
           colorClass="bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400"
+          sparklineColor="#3b82f6"
+          delay={0.2}
         />
         <KpiCard 
           title={t.nexia_dashboard.kpi_agents} 
           value={activeAgents.toString()} 
-          change="+2" 
+          change={`${employees.filter(e => e.status === 'active').length} actifs`}
           icon={Users} 
           colorClass="bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400"
+          sparklineColor="#10b981"
+          delay={0.3}
         />
         <KpiCard 
           title={t.nexia_dashboard.kpi_incidents} 
           value={activeIncidents.length.toString()} 
-          change="-1" 
-          icon={AlertCircle} 
+          change={resolvedIncidents.length > 0 ? `${resolvedIncidents.length} résolus` : '—'}
+          icon={WarningCircle} 
           colorClass="bg-rose-100 text-rose-600 dark:bg-rose-500/20 dark:text-rose-400"
+          sparklineColor="#f43f5e"
+          delay={0.4}
         />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Chart Area */}
-        <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div className="lg:col-span-2 bg-white/80 dark:bg-slate-900/60 backdrop-blur-3xl rounded-[2.5rem] p-6 md:p-8 border border-white/60 dark:border-white/10 shadow-apple dark:shadow-apple-dark transition-all">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white">{t.nexia_dashboard.chart_revenue_by_pole}</h2>
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">{t.nexia_dashboard.chart_revenue_by_pole}</h2>
             <select className="bg-slate-100 dark:bg-slate-800 border-none rounded-xl text-sm font-semibold px-4 py-2 outline-none cursor-pointer">
               <option>{t.nexia_dashboard.filter_this_year}</option>
               <option>{t.nexia_dashboard.filter_year_1}</option>
@@ -169,10 +186,10 @@ const chartData = React.useMemo(() => {
           </div>
         </div>
 
-        {/* Recent Activity Feed */}
-        <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col">
+        {/* Recent Pulse Feed */}
+        <div className="bg-white/80 dark:bg-slate-900/60 backdrop-blur-3xl rounded-[2.5rem] p-6 md:p-8 border border-white/60 dark:border-white/10 shadow-apple dark:shadow-apple-dark flex flex-col transition-all">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white">{t.nexia_dashboard.recent_activity_title}</h2>
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">{t.nexia_dashboard.recent_activity_title}</h2>
           </div>
           
           <div className="flex-1 space-y-6">
@@ -199,10 +216,12 @@ const chartData = React.useMemo(() => {
       </div>
 
       {/* Portfolio Overview Table */}
-      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <Building2 className="w-5 h-5 text-emerald-500" />
+      <div className="bg-white/80 dark:bg-slate-900/60 backdrop-blur-3xl rounded-[2.5rem] p-6 md:p-10 border border-white/60 dark:border-white/10 shadow-apple dark:shadow-apple-dark transition-all">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3 tracking-tight">
+            <div className="p-2.5 bg-brand-500/10 text-brand-600 dark:text-brand-400 rounded-2xl">
+              <Buildings weight="duotone" className="w-6 h-6" />
+            </div>
             {t.nexia_dashboard.portfolio_title}
           </h2>
         </div>
@@ -246,21 +265,24 @@ const chartData = React.useMemo(() => {
                     <td className="py-4 px-4 text-center">
                       {bIncidents.length > 0 ? (
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-400">
-                          <AlertCircle className="w-3.5 h-3.5" />
+                          <WarningCircle weight="duotone" className="w-3.5 h-3.5" />
                           {bIncidents.length}
                         </span>
                       ) : (
-                        <span className="text-slate-300 dark:text-slate-600">-</span>
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold bg-brand-50 text-brand-700 dark:bg-brand-500/10 dark:text-brand-400 border border-brand-200/50 dark:border-brand-800/50">
+                          <span className="w-1.5 h-1.5 rounded-full bg-brand-500 animate-pulse"></span>
+                          Clear
+                        </span>
                       )}
                     </td>
                     <td className="py-4 px-4 text-right">
                       {building.status === 'alert' ? (
                         <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-600">
-                          <Activity className="w-4 h-4" /> {t.nexia_dashboard.status_alert}
+                          <Pulse weight="duotone" className="w-4 h-4" /> {t.nexia_dashboard.status_alert}
                         </span>
                       ) : (
                         <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-600">
-                          <CheckCircle className="w-4 h-4" /> {t.nexia_dashboard.status_normal}
+                          <CheckCircle weight="duotone" className="w-4 h-4" /> {t.nexia_dashboard.status_normal}
                         </span>
                       )}
                     </td>

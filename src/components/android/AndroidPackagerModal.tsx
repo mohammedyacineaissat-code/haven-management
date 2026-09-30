@@ -1,18 +1,5 @@
 import React, { useState } from 'react';
-import { 
-  X, 
-  Smartphone, 
-  Package, 
-  Download, 
-  Copy, 
-  Check, 
-  ExternalLink, 
-  ShieldCheck, 
-  Terminal,
-  FileCode,
-  Layers,
-  Sparkles
-} from 'lucide-react';
+import { X, DeviceMobile, Package, Download, Copy, Check, ArrowSquareOut, ShieldCheck, Terminal, FileCode, Stack, Sparkle } from '@phosphor-icons/react';
 
 interface AndroidPackagerModalProps {
   isOpen: boolean;
@@ -95,7 +82,7 @@ bubblewrap build`;
         <div className="px-5 sm:px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-slate-900 to-blue-950 text-white">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-300 shrink-0">
-              <Package className="w-5 h-5" />
+              <Package weight="duotone" className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
@@ -116,7 +103,7 @@ bubblewrap build`;
             onClick={onClose} 
             className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors shrink-0"
           >
-            <X className="w-4 h-4" />
+            <X weight="duotone" className="w-4 h-4" />
           </button>
         </div>
 
@@ -139,7 +126,7 @@ bubblewrap build`;
                 }`}
               >
                 <div className="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
-                  <Smartphone className="w-4 h-4" />
+                  <DeviceMobile weight="duotone" className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
                   <div className="text-xs font-extrabold truncate">Haven Résidents</div>
@@ -157,7 +144,7 @@ bubblewrap build`;
                 }`}
               >
                 <div className="w-8 h-8 rounded-lg bg-slate-900 text-white flex items-center justify-center shrink-0">
-                  <Layers className="w-4 h-4" />
+                  <Stack weight="duotone" className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
                   <div className="text-xs font-extrabold truncate">Haven Syndic</div>
@@ -212,14 +199,14 @@ bubblewrap build`;
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-1.5 font-bold text-slate-900">
-                    <Terminal className="w-4 h-4 text-blue-600" />
+                    <Terminal weight="duotone" className="w-4 h-4 text-blue-600" />
                     <span>Terminal Build Commands</span>
                   </div>
                   <button
                     onClick={() => handleCopy('cap-cmd', capacitorCommands)}
                     className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 flex items-center gap-1 font-bold text-[11px]"
                   >
-                    {copiedId === 'cap-cmd' ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                    {copiedId === 'cap-cmd' ? <Check weight="duotone" className="w-3 h-3 text-emerald-600" /> : <Copy weight="duotone" className="w-3 h-3" />}
                     <span>{copiedId === 'cap-cmd' ? 'Copied!' : 'Copy Commands'}</span>
                   </button>
                 </div>
@@ -231,14 +218,14 @@ bubblewrap build`;
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-1.5 font-bold text-slate-900">
-                    <FileCode className="w-4 h-4 text-blue-600" />
+                    <FileCode weight="duotone" className="w-4 h-4 text-blue-600" />
                     <span>capacitor.config.json</span>
                   </div>
                   <button
                     onClick={() => handleCopy('cap-cfg', capacitorConfig)}
                     className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 flex items-center gap-1 font-bold text-[11px]"
                   >
-                    {copiedId === 'cap-cfg' ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                    {copiedId === 'cap-cfg' ? <Check weight="duotone" className="w-3 h-3 text-emerald-600" /> : <Copy weight="duotone" className="w-3 h-3" />}
                     <span>{copiedId === 'cap-cfg' ? 'Copied!' : 'Copy Config'}</span>
                   </button>
                 </div>
@@ -255,14 +242,14 @@ bubblewrap build`;
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-1.5 font-bold text-slate-900">
-                    <Terminal className="w-4 h-4 text-blue-600" />
-                    <span>Google Play Trusted Web Activity (Bubblewrap)</span>
+                    <Terminal weight="duotone" className="w-4 h-4 text-blue-600" />
+                    <span>Google Play Trusted Web Pulse (Bubblewrap)</span>
                   </div>
                   <button
                     onClick={() => handleCopy('twa-cmd', bubblewrapCommands)}
                     className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 flex items-center gap-1 font-bold text-[11px]"
                   >
-                    {copiedId === 'twa-cmd' ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                    {copiedId === 'twa-cmd' ? <Check weight="duotone" className="w-3 h-3 text-emerald-600" /> : <Copy weight="duotone" className="w-3 h-3" />}
                     <span>{copiedId === 'twa-cmd' ? 'Copied!' : 'Copy'}</span>
                   </button>
                 </div>
@@ -296,7 +283,7 @@ bubblewrap build`;
                 className="flex-1 p-2.5 rounded-xl bg-white border border-slate-200 hover:border-blue-500 flex items-center justify-between font-bold text-slate-800 hover:text-blue-600 transition-colors"
               >
                 <span>Launch Standalone Resident App</span>
-                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+                <ArrowSquareOut weight="duotone" className="w-3.5 h-3.5 text-slate-400" />
               </a>
 
               <a
@@ -306,7 +293,7 @@ bubblewrap build`;
                 className="flex-1 p-2.5 rounded-xl bg-white border border-slate-200 hover:border-blue-500 flex items-center justify-between font-bold text-slate-800 hover:text-blue-600 transition-colors"
               >
                 <span>Launch Standalone Manager Suite</span>
-                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+                <ArrowSquareOut weight="duotone" className="w-3.5 h-3.5 text-slate-400" />
               </a>
             </div>
           </div>

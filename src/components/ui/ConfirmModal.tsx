@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AlertTriangle, Loader2 } from 'lucide-react';
+import { Warning, CircleNotch } from '@phosphor-icons/react';
 
 interface ConfirmModalProps {
   isOpen: boolean;
@@ -44,7 +44,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
       <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm bg-white dark:bg-slate-900 rounded-3xl shadow-2xl z-50 animate-in zoom-in-95 duration-200 overflow-hidden border border-slate-200 dark:border-slate-800">
         <div className="p-6 text-center">
           <div className={`w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4 ${isDestructive ? 'bg-rose-100 dark:bg-rose-500/20 text-rose-500' : 'bg-amber-100 dark:bg-amber-500/20 text-amber-500'}`}>
-            <AlertTriangle className="w-8 h-8" />
+            <Warning weight="duotone" className="w-8 h-8" />
           </div>
           <h3 className="text-lg font-black text-slate-900 dark:text-white mb-2">
             {title}
@@ -70,7 +70,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                 : 'bg-emerald-500 hover:bg-emerald-600 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
             }`}
           >
-            {isProcessing ? <Loader2 className="w-4 h-4 animate-spin" /> : confirmText}
+            {isProcessing ? <CircleNotch weight="duotone" className="w-4 h-4 animate-spin" /> : confirmText}
           </button>
         </div>
       </div>

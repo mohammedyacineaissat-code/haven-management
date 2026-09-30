@@ -6,20 +6,7 @@ import {
 } from '../../types/building';
 import { useNexiaStore } from '../../store/useNexiaStore';
 import { useLanguageStore } from '../../store/useLanguageStore';
-import { 
-  Droplet, 
-  Zap, 
-  ArrowUpDown, 
-  Flame, 
-  ShieldAlert, 
-  AlertCircle, 
-  Clock, 
-  MapPin, 
-  Check, 
-  Send, 
-  Info, 
-  ShieldCheck 
-} from 'lucide-react';
+import { Drop, Lightning, ArrowsVertical, Fire, ShieldWarning, WarningCircle, Clock, MapPin, Check, PaperPlaneRight, Info, ShieldCheck } from '@phosphor-icons/react';
 import confetti from 'canvas-confetti';
 
 interface IncidentCardProps {
@@ -45,17 +32,17 @@ export const IncidentCard: React.FC<IncidentCardProps> = ({ incident, onOpenStat
     const getCategoryDetails = (category: IncidentCategory) => {
       switch (category) {
         case 'water':
-          return { icon: Droplet, label: t.incident_card.cat_water, bg: 'bg-sky-50 dark:bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-200/60 dark:border-sky-500/20' };
+          return { icon: Drop, label: t.incident_card.cat_water, bg: 'bg-sky-50 dark:bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-200/60 dark:border-sky-500/20' };
         case 'power':
-          return { icon: Zap, label: t.incident_card.cat_power, bg: 'bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-200/60 dark:border-amber-500/20' };
+          return { icon: Lightning, label: t.incident_card.cat_power, bg: 'bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-200/60 dark:border-amber-500/20' };
         case 'elevator':
-          return { icon: ArrowUpDown, label: t.incident_card.cat_elevator, bg: 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-200/60 dark:border-indigo-500/20' };
+          return { icon: ArrowsVertical, label: t.incident_card.cat_elevator, bg: 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-200/60 dark:border-indigo-500/20' };
         case 'heating':
-          return { icon: Flame, label: t.incident_card.cat_heating, bg: 'bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-200/60 dark:border-rose-500/20' };
+          return { icon: Fire, label: t.incident_card.cat_heating, bg: 'bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-200/60 dark:border-rose-500/20' };
         case 'gate':
-          return { icon: ShieldAlert, label: t.incident_card.cat_gate, bg: 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-500/20' };
+          return { icon: ShieldWarning, label: t.incident_card.cat_gate, bg: 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-500/20' };
         default:
-          return { icon: AlertCircle, label: t.incident_card.cat_general, bg: 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700' };
+          return { icon: WarningCircle, label: t.incident_card.cat_general, bg: 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700' };
       }
     };
 
@@ -136,7 +123,7 @@ export const IncidentCard: React.FC<IncidentCardProps> = ({ incident, onOpenStat
       {/* Location & Affected Units Pill */}
       <div className="flex flex-wrap items-center gap-2 mb-4 text-xs">
         <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 font-semibold text-slate-700 dark:text-slate-200">
-          <MapPin className="w-3.5 h-3.5 text-slate-400" />
+          <MapPin weight="duotone" className="w-3.5 h-3.5 text-slate-400" />
           {incident.location}
         </span>
         <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 font-semibold text-slate-700 dark:text-slate-200">
@@ -148,7 +135,7 @@ export const IncidentCard: React.FC<IncidentCardProps> = ({ incident, onOpenStat
       <div className="p-3.5 rounded-2xl mb-4 flex items-center justify-between bg-slate-50 dark:bg-slate-800/50 border border-slate-200/70 dark:border-slate-700/70 transition-colors">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/50 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400">
-            <Clock className="w-4 h-4" />
+            <Clock weight="duotone" className="w-4 h-4" />
           </div>
           <div>
             <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
@@ -223,7 +210,7 @@ export const IncidentCard: React.FC<IncidentCardProps> = ({ incident, onOpenStat
                   : 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30 hover:bg-emerald-100'
               }`}
             >
-              <Check className="w-3.5 h-3.5" />
+              <Check weight="duotone" className="w-3.5 h-3.5" />
               <span>{t.resident.water_flowing_btn}</span>
             </button>
 
@@ -249,11 +236,11 @@ export const IncidentCard: React.FC<IncidentCardProps> = ({ incident, onOpenStat
             : 'bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300'
         }`}>
           {incident.status === 'testing' ? (
-            <ShieldCheck className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
+            <ShieldCheck weight="duotone" className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
           ) : incident.status === 'resolved' ? (
-            <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+            <Check weight="duotone" className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
           ) : (
-            <Info className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+            <Info weight="duotone" className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
           )}
 
           <div>
@@ -302,7 +289,7 @@ export const IncidentCard: React.FC<IncidentCardProps> = ({ incident, onOpenStat
               disabled={!quickNote.trim()}
               className="elevate-button-indigo w-10 h-10 shrink-0 disabled:opacity-40"
             >
-              <Send className="w-3.5 h-3.5" />
+              <PaperPlaneRight weight="duotone" className="w-3.5 h-3.5" />
             </button>
           </form>
         </div>

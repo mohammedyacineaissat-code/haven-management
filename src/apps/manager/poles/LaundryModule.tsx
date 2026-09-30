@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-import { 
-  Shirt, 
-  MapPin, 
-  Truck, 
-  Clock, 
-  Search,
-  Plus,
-  PackageCheck,
-  Building2,
-  Calendar
-} from 'lucide-react';
+import { TShirt, MapPin, Truck, Clock, MagnifyingGlass, Plus, Package, Buildings, Calendar } from '@phosphor-icons/react';
 
 import { useNexiaStore } from '../../../store/useNexiaStore';
 import { useLanguageStore } from '../../../store/useLanguageStore';
@@ -37,7 +27,7 @@ export const LaundryModule = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
         <div>
           <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2 mb-2">
-            <Shirt className="w-6 h-6 text-amber-500" />
+            <TShirt weight="duotone" className="w-6 h-6 text-amber-500" />
             {t.laundry_module.title}
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
@@ -46,7 +36,7 @@ export const LaundryModule = () => {
         </div>
         
         <button className="flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold rounded-xl hover:-translate-y-0.5 transition-transform">
-          <Plus className="w-4 h-4" />
+          <Plus weight="duotone" className="w-4 h-4" />
           {t.laundry_module.new_batch}
         </button>
       </div>
@@ -54,8 +44,8 @@ export const LaundryModule = () => {
       {/* Tabs */}
       <div className="flex overflow-x-auto hide-scrollbar gap-2 p-1 bg-slate-200/50 dark:bg-slate-800/50 rounded-2xl w-fit border border-slate-200/80 dark:border-slate-800/80">
         {[
-          { id: 'batches', label: t.laundry_module.tab_batches, icon: PackageCheck },
-          { id: 'clients', label: t.laundry_module.tab_clients, icon: Building2 },
+          { id: 'batches', label: t.laundry_module.tab_batches, icon: Package },
+          { id: 'clients', label: t.laundry_module.tab_clients, icon: Buildings },
           { id: 'logistics', label: t.laundry_module.tab_logistics, icon: Truck },
         ].map(tab => (
           <button
@@ -128,7 +118,7 @@ export const LaundryModule = () => {
             <div className="flex justify-between items-center mb-4">
               <h3 className="font-bold text-lg text-slate-900 dark:text-white">{t.laundry_module.clients_list_title}</h3>
               <div className="relative">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <MagnifyingGlass weight="duotone" className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input 
                   type="text" 
                   placeholder={t.laundry_module.search_placeholder}
@@ -144,12 +134,12 @@ export const LaundryModule = () => {
                 <div key={building.id} className="p-5 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-500 transition-colors group cursor-pointer bg-white dark:bg-slate-900">
                   <div className="flex justify-between items-start mb-4">
                     <div className="p-2.5 rounded-xl bg-indigo-100 text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-400">
-                      <Building2 className="w-5 h-5" />
+                      <Buildings weight="duotone" className="w-5 h-5" />
                     </div>
                   </div>
                   <h4 className="font-bold text-lg text-slate-900 dark:text-white mb-2 group-hover:text-amber-500 transition-colors line-clamp-1">{building.name}</h4>
                   <div className="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-400">
-                    <Shirt className="w-4 h-4 text-slate-400" />
+                    <TShirt weight="duotone" className="w-4 h-4 text-slate-400" />
                     {t.laundry_module.avg_volume}: {Math.floor(Math.random() * 200) + 50} kg/j
                   </div>
                 </div>
@@ -161,7 +151,7 @@ export const LaundryModule = () => {
         {activeTab === 'logistics' && (
           <div className="flex flex-col items-center justify-center h-64 text-center">
             <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-4 text-slate-400">
-              <Truck className="w-8 h-8" />
+              <Truck weight="duotone" className="w-8 h-8" />
             </div>
             <h3 className="font-bold text-slate-900 dark:text-white mb-2">{t.laundry_module.logistics_title}</h3>
             <p className="text-slate-500 max-w-md">{t.laundry_module.logistics_desc}</p>

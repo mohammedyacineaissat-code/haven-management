@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Check, ArrowRight } from 'lucide-react';
+import { X, Check, ArrowRight } from '@phosphor-icons/react';
 import { Incident, IncidentStatus } from '../../types/building';
 import { useNexiaStore } from '../../store/useNexiaStore';
 import { useLanguageStore } from '../../store/useLanguageStore';
@@ -38,7 +38,7 @@ export const StatusUpdateModal: React.FC<StatusUpdateModalProps> = ({ incident, 
             </p>
           </div>
           <button onClick={onClose} className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center">
-            <X className="w-4 h-4" />
+            <X weight="duotone" className="w-4 h-4" />
           </button>
         </div>
 
@@ -86,7 +86,7 @@ export const StatusUpdateModal: React.FC<StatusUpdateModalProps> = ({ incident, 
                         ? isResolved ? 'border-emerald-600 bg-emerald-600 text-white' : 'border-blue-600 bg-blue-600 text-white' 
                         : 'border-slate-300'
                     }`}>
-                      {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
+                      {isSelected && <Check weight="duotone" className="w-3 h-3 stroke-[3]" />}
                     </div>
                   </button>
                 );
@@ -120,7 +120,7 @@ export const StatusUpdateModal: React.FC<StatusUpdateModalProps> = ({ incident, 
               className="px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-blue-600/30"
             >
               <span>{t.manager_modals.save_update}</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight weight="duotone" className="w-3.5 h-3.5" />
             </button>
           </div>
         </form>

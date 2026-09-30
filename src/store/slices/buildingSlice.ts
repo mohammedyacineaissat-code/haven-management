@@ -1,5 +1,5 @@
 import { StateCreator } from 'zustand';
-import { supabase } from '../../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../../lib/supabase';
 import { Incident, ResidentReport, BuildingNotice, Building } from '../../types/building';
 import { StoreState } from '../storeTypes';
 import { playAlertSound } from '../../utils/audio';
@@ -26,7 +26,7 @@ export const createBuildingSlice: StateCreator<StoreState, [], [], BuildingSlice
       status: 'operational'
     };
 
-    set((state: any) => ({
+    set(state => ({
       buildings: [...state.buildings, newBuilding],
       activeBuildingId: newId
     }));
@@ -46,8 +46,8 @@ export const createBuildingSlice: StateCreator<StoreState, [], [], BuildingSlice
   },
 
   removeBuilding: async (buildingId: string) => {
-    set((state: any) => {
-      const remainingBuildings = state.buildings.filter((b: any) => b.id !== buildingId);
+    set(state => {
+      const remainingBuildings = state.buildings.filter(b => b.id !== buildingId);
       const nextActiveId = state.activeBuildingId === buildingId 
         ? (remainingBuildings[0]?.id || '') 
         : state.activeBuildingId;
@@ -80,8 +80,8 @@ export const createBuildingSlice: StateCreator<StoreState, [], [], BuildingSlice
       affectedUnits: incidentData.affectedUnits,
       status: 'reported',
       reportedAt: currentTime,
-      estimatedRestorationTime: incidentData.estimatedRestorationTime,
-      etaCountdownMinutes: incidentData.etaCountdownMinutes,
+      estimatedRestorationTime: incidentData.estimatedRestorationTime || 'Sous peu',
+      etaCountdownMinutes: incidentData.etaCountdownMinutes || 0,
       requiresResidentConfirmation: incidentData.requiresResidentConfirmation ?? (incidentData.category === 'water'),
       timeline: [
         {
@@ -96,7 +96,7 @@ export const createBuildingSlice: StateCreator<StoreState, [], [], BuildingSlice
       confirmations: []
     };
 
-    set((state: any) => ({
+    set(state => ({
       activeIncidents: [newIncident, ...state.activeIncidents],
       unreadAlertCount: state.unreadAlertCount + 1
     }));
@@ -133,12 +133,12 @@ export const createBuildingSlice: StateCreator<StoreState, [], [], BuildingSlice
     }
   },
 
-  updateIncidentStatus: async (incidentId: string, status: any, note?: string) => {
+  updateIncidentStatus: async (incidentId, status, note?) => {
     const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     const isResolved = status === 'resolved';
 
-    set((state: any) => {
-      const target = state.activeIncidents.find((i: any) => i.id === incidentId);
+    set(state => {
+      const target = state.activeIncidents.find(i => i.id === incidentId);
       if (!target) return state;
 
       const updatedTimeline = [
@@ -168,7 +168,7 @@ export const createBuildingSlice: StateCreator<StoreState, [], [], BuildingSlice
         };
       } else {
         return {
-          activeIncidents: state.activeIncidents.map((i: any) => i.id === incidentId ? updatedIncident : i)
+          activeIncidents: state.activeIncidents.map(i => i.id === incidentId ? updatedIncident : i)
         };
       }
     });
@@ -193,8 +193,8 @@ export const createBuildingSlice: StateCreator<StoreState, [], [], BuildingSlice
       ? 'Bureau du Syndic' 
       : (get().residentProfile?.lastName || 'Résident');
 
-    set((state: any) => {
-      const active = state.activeIncidents.map((inc: any) => {
+    set(state => {
+      const active = state.activeIncidents.map(inc => {
         if (inc.id === incidentId) {
           return {
             ...inc,
@@ -232,10 +232,10 @@ export const createBuildingSlice: StateCreator<StoreState, [], [], BuildingSlice
   confirmRestoration: async (incidentId: string, isRestored: boolean) => {
     const apt = get().userApartment || 'Mon Appartement';
 
-    set((state: any) => {
-      const active = state.activeIncidents.map((inc: any) => {
+    set(state => {
+      const active = state.activeIncidents.map(inc => {
         if (inc.id === incidentId) {
-          const existingFiltered = (inc.confirmations || []).filter((c: any) => c.apartment !== apt);
+          const existingFiltered = (inc.confirmations || []).filter(c => c.apartment !== apt);
           return {
             ...inc,
             confirmations: [
@@ -264,7 +264,7 @@ export const createBuildingSlice: StateCreator<StoreState, [], [], BuildingSlice
     }
   },
 
-  submitResidentReport: async (report: any) => {
+  submitResidentReport: async (report) => {
     const bId = get().residentHomeBuildingId || get().buildings[0]?.id;
     const author = get().residentProfile 
       ? `${get().residentProfile?.lastName} (${get().userApartment})`
@@ -282,7 +282,7 @@ export const createBuildingSlice: StateCreator<StoreState, [], [], BuildingSlice
       submittedAt: 'À l\'instant'
     };
 
-    set((state: any) => ({
+    set(state => ({
       residentReports: [newReport, ...state.residentReports]
     }));
 
@@ -301,9 +301,9 @@ export const createBuildingSlice: StateCreator<StoreState, [], [], BuildingSlice
     }
   },
 
-  updateTicketStatus: async (ticketId: string, status: any) => {
-    set((state: any) => ({
-      residentReports: state.residentReports.map((r: any) => r.id === ticketId ? { ...r, status } : r)
+  updateTicketStatus: async (ticketId, status) => {
+    set(state => ({
+      residentReports: state.residentReports.map(r => r.id === ticketId ? { ...r, status } : r)
     }));
 
     try {
@@ -313,7 +313,7 @@ export const createBuildingSlice: StateCreator<StoreState, [], [], BuildingSlice
     }
   },
 
-  addNotice: async (notice: any) => {
+  addNotice: async (notice) => {
     const bId = notice.buildingId || get().activeBuildingId || get().buildings[0]?.id;
     const newNotice: BuildingNotice = {
       id: `not-${Date.now()}`,
@@ -327,7 +327,7 @@ export const createBuildingSlice: StateCreator<StoreState, [], [], BuildingSlice
       expenseDetails: notice.expenseDetails
     };
 
-    set((state: any) => ({
+    set(state => ({
       notices: [newNotice, ...state.notices]
     }));
 
@@ -349,8 +349,8 @@ export const createBuildingSlice: StateCreator<StoreState, [], [], BuildingSlice
   },
 
   deleteNotice: async (noticeId: string) => {
-    set((state: any) => ({
-      notices: state.notices.filter((n: any) => n.id !== noticeId)
+    set(state => ({
+      notices: state.notices.filter(n => n.id !== noticeId)
     }));
     try {
       await supabase.from('notices').delete().eq('id', noticeId);

@@ -3,8 +3,11 @@ import { createRoot } from 'react-dom/client';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import App from './App.tsx';
 import './index.css';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+
+const isCapacitor = typeof window !== 'undefined' && !!(window as any).Capacitor;
+const Router = isCapacitor ? HashRouter : BrowserRouter;
 
 // Remove the startup fallback loading indicator once React mounts
 const removeFallback = () => {
@@ -22,10 +25,10 @@ try {
   root.render(
     <StrictMode>
       <ErrorBoundary>
-        <BrowserRouter>
+        <Router>
           <App />
           <Toaster position="top-right" />
-        </BrowserRouter>
+        </Router>
       </ErrorBoundary>
     </StrictMode>,
   );

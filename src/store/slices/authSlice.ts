@@ -1,5 +1,5 @@
 import { StateCreator } from 'zustand';
-import { supabase } from '../../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../../lib/supabase';
 import { ResidentProfile, ManagerProfile } from '../../types/building';
 import { StoreState } from '../storeTypes';
 import { toAuthPassword, cleanDigits, cleanStr, cleanApt, generateUUID } from './helpers';
@@ -20,6 +20,10 @@ export const createAuthSlice: StateCreator<StoreState, [], [], AuthSlice> = (set
     const cleanPhone = accountData.phone.trim();
     const cleanPwd = accountData.password?.trim() || cleanPhone;
     const joinedStr = new Date().toLocaleDateString('fr-FR', { month: 'short', year: 'numeric' });
+
+    if (!isSupabaseConfigured) {
+      return { success: false, message: 'Service non disponible. Veuillez réessayer plus tard.' };
+    }
 
     try {
       // 1. Check if an account already exists for this building & apartment
@@ -132,6 +136,10 @@ export const createAuthSlice: StateCreator<StoreState, [], [], AuthSlice> = (set
     }
   },
   loginResidentWithCredentials: async (buildingId: string, aptNumber: string, passwordOrPhone: string) => {
+    if (!isSupabaseConfigured) {
+      return { success: false, message: 'Service non disponible. Veuillez réessayer plus tard.' };
+    }
+
     try {
       const targetApt = cleanStr(aptNumber);
       
@@ -147,7 +155,7 @@ export const createAuthSlice: StateCreator<StoreState, [], [], AuthSlice> = (set
         };
       }
 
-      // Find by apt number (flexible match like the local fallback)
+      // Find by apt number (flexible match)
       const account = residents.find(a => 
         cleanStr(a.apt_number) === targetApt ||
         cleanStr(`apt ${a.apt_number}`) === targetApt ||
@@ -163,35 +171,16 @@ export const createAuthSlice: StateCreator<StoreState, [], [], AuthSlice> = (set
 
       let isMatch = false;
 
-      // 1. Check if it's a phone match (local fallback / fast login)
-      const enteredSecretDigits = cleanDigits(passwordOrPhone);
-      const enteredSecretRaw = cleanStr(passwordOrPhone);
+      // Authenticate via Supabase Auth (password login)
       const accountPhoneDigits = cleanDigits(account.phone);
+      const authEmail = `${accountPhoneDigits || cleanStr(account.phone)}@haven.dz`;
+      const { data: authData } = await supabase.auth.signInWithPassword({
+        email: authEmail,
+        password: toAuthPassword(passwordOrPhone.trim())
+      });
       
-      if (
-        (enteredSecretDigits.length >= 4 && accountPhoneDigits.endsWith(enteredSecretDigits)) ||
-        (enteredSecretRaw === cleanStr(account.phone))
-      ) {
+      if (authData?.user) {
         isMatch = true;
-      }
-
-      // 2. If not phone, try Supabase Auth (Password Login)
-      if (!isMatch) {
-        const authEmail = `${accountPhoneDigits || cleanStr(account.phone)}@haven.dz`;
-        const { data: authData } = await supabase.auth.signInWithPassword({
-          email: authEmail,
-          password: toAuthPassword(passwordOrPhone.trim())
-        });
-        
-        if (authData?.user) {
-          isMatch = true;
-        } else {
-          // Backward compatibility for un-migrated accounts with plaintext passwords in DB
-          const accountPwdRaw = account.password ? cleanStr(account.password) : null;
-          if (accountPwdRaw && accountPwdRaw === enteredSecretRaw) {
-            isMatch = true;
-          }
-        }
       }
 
       if (!isMatch) {
@@ -269,6 +258,10 @@ export const createAuthSlice: StateCreator<StoreState, [], [], AuthSlice> = (set
   },
 
   registerManager: async (data: { name: string; emailOrPhone: string; password: string; agencyName?: string }) => {
+    if (!isSupabaseConfigured) {
+      return { success: false, message: 'Service non disponible. Veuillez réessayer plus tard.' };
+    }
+
     const cleanIdentifier = data.emailOrPhone.trim().toLowerCase();
     const cleanPwd = data.password.trim();
     const currentManagers = get().registeredManagers;
@@ -306,7 +299,7 @@ export const createAuthSlice: StateCreator<StoreState, [], [], AuthSlice> = (set
         const firstName = nameParts[0] || '';
         const lastName = nameParts.slice(1).join(' ') || data.name.trim();
 
-        // Save into public.profiles
+        // FloppyDisk into public.profiles
         await supabase.from('profiles').upsert({
           id: authUserId,
           role: 'manager',
@@ -351,7 +344,11 @@ export const createAuthSlice: StateCreator<StoreState, [], [], AuthSlice> = (set
     const cleanIdentifier = emailOrPhone.trim().toLowerCase();
     const cleanPwd = password.trim();
 
-    // 2. Try Supabase Auth signInWithPassword
+    if (!isSupabaseConfigured) {
+      return { success: false, message: 'Service non disponible. Veuillez réessayer plus tard.' };
+    }
+
+    // Try Supabase Auth signInWithPassword
     try {
       const authEmail = cleanIdentifier.includes('@') 
         ? cleanIdentifier 
@@ -412,9 +409,5 @@ export const createAuthSlice: StateCreator<StoreState, [], [], AuthSlice> = (set
       // Safe fallback
     }
   },
-
-  toggleSound: () => set(state => ({ soundEnabled: !state.soundEnabled })),
-
-  clearUnreadAlerts: () => set({ unreadAlertCount: 0 }),
 
 });

@@ -9,15 +9,7 @@ import { AddFixedChargeModal } from '../../../components/manager/AddFixedChargeM
 import { AddGrosTravauxModal } from '../../../components/manager/AddGrosTravauxModal';
 import { AddAnnouncementModal } from '../../../components/manager/AddAnnouncementModal';
 import { AddBuildingModal } from '../../../components/manager/AddBuildingModal';
-import { 
-  Building2, 
-  MapPin, 
-  Calculator, 
-  Wallet, 
-  Wrench,
-  Megaphone,
-  Plus
-} from 'lucide-react';
+import { Buildings, MapPin, Calculator, Wallet, Wrench, Megaphone, Plus } from '@phosphor-icons/react';
 
 export const PropertyModule = () => {
   const { buildings, activeBuildingId, setActiveBuilding } = useNexiaStore();
@@ -39,7 +31,7 @@ export const PropertyModule = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
         <div>
           <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2 mb-2">
-            <Building2 className="w-6 h-6 text-amber-500" />
+            <Buildings weight="duotone" className="w-6 h-6 text-amber-500" />
             {t.property_module.title}
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
@@ -49,7 +41,7 @@ export const PropertyModule = () => {
 
         <div className="flex items-center gap-3">
           <div className="relative">
-            <MapPin className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <MapPin weight="duotone" className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <select
               value={activeBuildingId}
               onChange={(e) => setActiveBuilding(e.target.value)}
@@ -67,7 +59,7 @@ export const PropertyModule = () => {
             className="p-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl hover:scale-105 transition-transform"
             title={t.property_module.add_building}
           >
-            <Plus className="w-5 h-5" />
+            <Plus weight="duotone" className="w-5 h-5" />
           </button>
         </div>
       </div>

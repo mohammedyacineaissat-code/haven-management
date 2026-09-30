@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
 import { useNexiaStore } from '../../store/useNexiaStore';
-import { 
-  Camera, 
-  Send, 
-  MapPin, 
-  CheckCircle, 
-  Plus, 
-  X,
-  HelpCircle,
-  Inbox
-} from 'lucide-react';
+import { Camera, PaperPlaneRight, MapPin, CheckCircle, Plus, X, Question, Tray } from '@phosphor-icons/react';
 import { IncidentCategory } from '../../types/building';
 import { useLanguageStore } from '../../store/useLanguageStore';
 
@@ -109,7 +100,7 @@ export const ResidentTicketsView: React.FC = () => {
               onClick={() => setShowSubmitModal(true)}
               className="px-4 py-2 rounded-xl elevate-button-primary text-xs font-bold flex items-center gap-1.5 transition-all"
             >
-              <Plus className="w-3.5 h-3.5" />
+              <Plus weight="duotone" className="w-3.5 h-3.5" />
               <span>{t.tickets.new_report_btn}</span>
             </button>
           )}
@@ -128,7 +119,7 @@ export const ResidentTicketsView: React.FC = () => {
                 onClick={() => setShowSubmitModal(false)}
                 className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 flex items-center justify-center"
               >
-                <X className="w-4 h-4" />
+                <X weight="duotone" className="w-4 h-4" />
               </button>
             </div>
 
@@ -191,7 +182,7 @@ export const ResidentTicketsView: React.FC = () => {
                       : 'bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700/50'
                   }`}
                 >
-                  <Camera className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                  <Camera weight="duotone" className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                   <span>{photoData ? t.tickets.photo_attached : t.tickets.attach_photo}</span>
                   {photoData && (
                     <img src={photoData} alt="Preview" className="w-16 h-16 object-cover rounded-xl mt-1 border border-emerald-200 dark:border-emerald-700" />
@@ -211,7 +202,7 @@ export const ResidentTicketsView: React.FC = () => {
                   type="submit"
                   className="px-5 py-2.5 rounded-xl elevate-button-primary font-bold text-xs flex items-center gap-1.5"
                 >
-                  <Send className="w-3.5 h-3.5" />
+                  <PaperPlaneRight weight="duotone" className="w-3.5 h-3.5" />
                   <span>{t.tickets.send_ticket}</span>
                 </button>
               </div>
@@ -225,7 +216,7 @@ export const ResidentTicketsView: React.FC = () => {
         {filteredTickets.length === 0 ? (
           <div className="p-12 rounded-3xl elevate-card text-center transition-colors">
             <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto mb-3">
-              <Inbox className="w-6 h-6" />
+              <Tray weight="duotone" className="w-6 h-6" />
             </div>
             <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-1">{t.tickets.no_reports}</h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xs mx-auto mb-4">
@@ -236,7 +227,7 @@ export const ResidentTicketsView: React.FC = () => {
                 onClick={() => setShowSubmitModal(true)}
                 className="px-4 py-2 rounded-xl elevate-button-secondary text-xs font-bold inline-flex items-center gap-1.5 transition-colors"
               >
-                <Camera className="w-3.5 h-3.5" />
+                <Camera weight="duotone" className="w-3.5 h-3.5" />
                 <span>{t.tickets.snap_report_btn}</span>
               </button>
             )}
@@ -276,7 +267,7 @@ export const ResidentTicketsView: React.FC = () => {
 
               <div className="flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500 pt-2 border-t border-slate-100 dark:border-slate-800">
                 <span className="flex items-center gap-1">
-                  <MapPin className="w-3 h-3 text-emerald-500" />
+                  <MapPin weight="duotone" className="w-3 h-3 text-emerald-500" />
                   {report.location}
                 </span>
                 <span>{t.tickets.by_prefix} {report.submittedBy} • {report.submittedAt}</span>

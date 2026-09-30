@@ -3,25 +3,7 @@ import { useNexiaStore } from '../../store/useNexiaStore';
 import { useLanguageStore } from '../../store/useLanguageStore';
 import { GrosTravauxProject, GrosTravauxStatus } from '../../types/building';
 import { AddGrosTravauxModal } from './AddGrosTravauxModal';
-import { 
-  Hammer, 
-  Plus, 
-  Calendar, 
-  Phone, 
-  Building2, 
-  CheckCircle2, 
-  Clock, 
-  AlertTriangle, 
-  Send, 
-  Edit2, 
-  Trash2, 
-  CheckCheck, 
-  ChevronDown, 
-  ChevronUp, 
-  Coins, 
-  Info,
-  Layers
-} from 'lucide-react';
+import { Hammer, Plus, Calendar, Phone, Buildings, CheckCircle, Clock, Warning, PaperPlaneRight, Pencil, Trash, Checks, CaretDown, CaretUp, Coins, Info, Stack } from '@phosphor-icons/react';
 
 interface GrosTravauxTabProps {
   buildingId: string;
@@ -82,7 +64,7 @@ export const GrosTravauxTab: React.FC<GrosTravauxTabProps> = ({
       <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/20 text-slate-800 dark:text-slate-200">
         <div className="flex items-start gap-3.5">
           <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-700 dark:text-amber-300 flex items-center justify-center shrink-0 mt-0.5">
-            <Layers className="w-5 h-5" />
+            <Stack weight="duotone" className="w-5 h-5" />
           </div>
           <div className="flex-1">
             <h3 className="text-sm sm:text-base font-black text-amber-900 dark:text-amber-200">
@@ -113,7 +95,7 @@ export const GrosTravauxTab: React.FC<GrosTravauxTabProps> = ({
           }}
           className="px-4 py-2.5 rounded-2xl bg-amber-600 hover:bg-amber-700 active:scale-[0.98] text-white text-xs font-bold shadow-md shadow-amber-500/20 flex items-center justify-center gap-2 transition-all shrink-0"
         >
-          <Plus className="w-4 h-4" />
+          <Plus weight="duotone" className="w-4 h-4" />
           <span>{t.gros_travaux.new_project_btn}</span>
         </button>
       </div>
@@ -122,7 +104,7 @@ export const GrosTravauxTab: React.FC<GrosTravauxTabProps> = ({
       {projects.length === 0 ? (
         <div className="p-12 rounded-3xl elevate-card border border-dashed border-slate-300 dark:border-slate-800 text-center">
           <div className="w-16 h-16 rounded-3xl bg-amber-500/10 text-amber-500 flex items-center justify-center mx-auto mb-4">
-            <Hammer className="w-8 h-8" />
+            <Hammer weight="duotone" className="w-8 h-8" />
           </div>
           <h3 className="text-base font-bold text-slate-800 dark:text-slate-200">
             {t.gros_travaux.no_projects}
@@ -159,7 +141,7 @@ export const GrosTravauxTab: React.FC<GrosTravauxTabProps> = ({
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
                   <div className="flex items-center gap-2.5">
                     <div className="w-9 h-9 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
-                      <Hammer className="w-4 h-4" />
+                      <Hammer weight="duotone" className="w-4 h-4" />
                     </div>
                     <div>
                       <h4 className="text-base font-bold text-slate-900 dark:text-white leading-tight">
@@ -184,7 +166,7 @@ export const GrosTravauxTab: React.FC<GrosTravauxTabProps> = ({
                       title={t.finances.edit_btn}
                       className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                     >
-                      <Edit2 className="w-3.5 h-3.5" />
+                      <Pencil weight="duotone" className="w-3.5 h-3.5" />
                     </button>
                     <button
                       onClick={() => {
@@ -195,7 +177,7 @@ export const GrosTravauxTab: React.FC<GrosTravauxTabProps> = ({
                       title={t.common.cancel}
                       className="p-1.5 text-slate-400 hover:text-rose-500 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
                     >
-                      <Trash2 className="w-3.5 h-3.5" />
+                      <Trash weight="duotone" className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>
@@ -248,7 +230,7 @@ export const GrosTravauxTab: React.FC<GrosTravauxTabProps> = ({
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center justify-between text-xs">
                     <span className="font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                      <Coins className="w-3.5 h-3.5 text-amber-500" />
+                      <Coins weight="duotone" className="w-3.5 h-3.5 text-amber-500" />
                       <span>{t.gros_travaux.collection_progress} :</span>
                       <span className="text-amber-600 dark:text-amber-400 font-black">
                         {collectedAmount.toLocaleString()} / {project.totalCost.toLocaleString()} DA
@@ -275,7 +257,7 @@ export const GrosTravauxTab: React.FC<GrosTravauxTabProps> = ({
                     className="text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 transition-colors"
                   >
                     <span>{t.gros_travaux.checklist_title}</span>
-                    {isChecklistOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                    {isChecklistOpen ? <CaretUp weight="duotone" className="w-4 h-4" /> : <CaretDown weight="duotone" className="w-4 h-4" />}
                   </button>
 
                   <button
@@ -286,7 +268,7 @@ export const GrosTravauxTab: React.FC<GrosTravauxTabProps> = ({
                         : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300'
                     }`}
                   >
-                    {isBroadcastSuccess ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Send className="w-3.5 h-3.5" />}
+                    {isBroadcastSuccess ? <CheckCircle weight="duotone" className="w-3.5 h-3.5" /> : <PaperPlaneRight weight="duotone" className="w-3.5 h-3.5" />}
                     <span>{isBroadcastSuccess ? t.gros_travaux.notice_published_success : t.gros_travaux.publish_notice_btn}</span>
                   </button>
                 </div>

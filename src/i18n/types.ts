@@ -34,6 +34,7 @@ export interface Translations {
     search_placeholder: string;
     notifications: string;
     no_notifications: string;
+    sidebar_section_title: string;
   };
   nexia_dashboard: {
     overview_title: string;

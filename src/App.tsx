@@ -49,6 +49,7 @@ export function App() {
 
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
+      useNexiaStore.getState().cleanupData();
     };
   }, [initializeData, initTheme]);
 

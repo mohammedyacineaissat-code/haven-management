@@ -2,21 +2,7 @@ import React, { useState } from 'react';
 import { useNexiaStore } from '../../store/useNexiaStore';
 import { useLanguageStore } from '../../store/useLanguageStore';
 import { LanguageSwitcher } from '../../components/layout/LanguageSwitcher';
-import { 
-  Building2, 
-  ArrowRight, 
-  Lock, 
-  Phone, 
-  MapPin, 
-  Search, 
-  Check,
-  UserPlus,
-  LogIn,
-  AlertCircle,
-  KeyRound,
-  Home,
-  CheckCircle2
-} from 'lucide-react';
+import { Buildings, ArrowRight, Lock, Phone, MapPin, MagnifyingGlass, Check, UserPlus, SignIn, WarningCircle, Key, House, CheckCircle } from '@phosphor-icons/react';
 
 interface ClientLoginScreenProps {
   isStandalone?: boolean;
@@ -198,7 +184,7 @@ export const ClientLoginScreen: React.FC<ClientLoginScreenProps> = ({
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
             }`}
           >
-            <UserPlus className="w-3.5 h-3.5" />
+            <UserPlus weight="duotone" className="w-3.5 h-3.5" />
             <span>{t.login.signup_tab}</span>
           </button>
 
@@ -215,7 +201,7 @@ export const ClientLoginScreen: React.FC<ClientLoginScreenProps> = ({
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
             }`}
           >
-            <LogIn className="w-3.5 h-3.5" />
+            <SignIn weight="duotone" className="w-3.5 h-3.5" />
             <span>{t.login.login_tab}</span>
           </button>
         </div>
@@ -223,7 +209,7 @@ export const ClientLoginScreen: React.FC<ClientLoginScreenProps> = ({
         {/* Global Error Banner */}
         {generalError && (
           <div className="mb-4 p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-start gap-2 animate-in fade-in">
-            <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+            <WarningCircle weight="duotone" className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
             <div className="flex-1">
               <span>{generalError}</span>
               {authMode === 'login' && (
@@ -248,7 +234,7 @@ export const ClientLoginScreen: React.FC<ClientLoginScreenProps> = ({
             {t.login.residence_label.replace('*', '')} <span className="text-red-500">*</span>
           </label>
           <div className="relative">
-            <Building2 className="w-4 h-4 text-slate-400 absolute start-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <Buildings weight="duotone" className="w-4 h-4 text-slate-400 absolute start-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             <select
               value={selectedBuildingId}
               onChange={(e) => handleSelectBuilding(e.target.value)}
@@ -277,7 +263,7 @@ export const ClientLoginScreen: React.FC<ClientLoginScreenProps> = ({
                   {t.login.apt_label} <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <Home className="w-3.5 h-3.5 text-slate-400 absolute start-3 top-1/2 -translate-y-1/2" />
+                  <House weight="duotone" className="w-3.5 h-3.5 text-slate-400 absolute start-3 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
                     required
@@ -349,7 +335,7 @@ export const ClientLoginScreen: React.FC<ClientLoginScreenProps> = ({
                 {t.login.phone_label} <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <Phone className="w-3.5 h-3.5 text-slate-400 absolute start-3 top-1/2 -translate-y-1/2" />
+                <Phone weight="duotone" className="w-3.5 h-3.5 text-slate-400 absolute start-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="tel"
                   required
@@ -373,7 +359,7 @@ export const ClientLoginScreen: React.FC<ClientLoginScreenProps> = ({
                 {t.login.password_label || 'Mot de passe (Optionnel)'}
               </label>
               <div className="relative">
-                <KeyRound className="w-3.5 h-3.5 text-slate-400 absolute start-3 top-1/2 -translate-y-1/2" />
+                <Key weight="duotone" className="w-3.5 h-3.5 text-slate-400 absolute start-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="password"
                   value={signupPassword}
@@ -392,7 +378,7 @@ export const ClientLoginScreen: React.FC<ClientLoginScreenProps> = ({
                 className="w-full py-3.5 px-4 elevate-button-primary text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition-all disabled:opacity-50"
               >
                 <span>{t.login.create_account_btn}</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight weight="duotone" className="w-4 h-4" />
               </button>
             </div>
 
@@ -408,7 +394,7 @@ export const ClientLoginScreen: React.FC<ClientLoginScreenProps> = ({
                 {t.login.login_apt_label}
               </label>
               <div className="relative">
-                <Home className="w-4 h-4 text-slate-400 absolute start-3.5 top-1/2 -translate-y-1/2" />
+                <House weight="duotone" className="w-4 h-4 text-slate-400 absolute start-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   required
@@ -428,7 +414,7 @@ export const ClientLoginScreen: React.FC<ClientLoginScreenProps> = ({
                 {t.login.login_password_label}
               </label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-slate-400 absolute start-3.5 top-1/2 -translate-y-1/2" />
+                <Lock weight="duotone" className="w-4 h-4 text-slate-400 absolute start-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="password"
                   required
@@ -453,7 +439,7 @@ export const ClientLoginScreen: React.FC<ClientLoginScreenProps> = ({
                 className="w-full py-3.5 px-4 elevate-button-primary text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition-all disabled:opacity-50"
               >
                 <span>{t.login.login_btn}</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight weight="duotone" className="w-4 h-4" />
               </button>
             </div>
 

@@ -10,26 +10,7 @@ const IncidentCard = lazy(() => import('../../components/outages/IncidentCard').
 const NoticeBoard = lazy(() => import('../../components/notices/NoticeBoard').then(m => ({ default: m.NoticeBoard })));
 const EmergencyDirectory = lazy(() => import('../../components/directory/EmergencyDirectory').then(m => ({ default: m.EmergencyDirectory })));
 const ResidentTicketsView = lazy(() => import('../../components/reports/ResidentTicketsView').then(m => ({ default: m.ResidentTicketsView })));
-import { 
-  AlertCircle, 
-  Bell, 
-  MessageSquare, 
-  Phone, 
-  CheckCircle, 
-  Volume2, 
-  VolumeX, 
-  History, 
-  ChevronDown, 
-  ChevronUp, 
-  LogOut, 
-  Wifi,
-  Battery,
-  Droplet,
-  Zap,
-  Check,
-  Camera,
-  Loader2
-} from 'lucide-react';
+import { WarningCircle, Bell, ChatCircle, Phone, CheckCircle, SpeakerHigh, SpeakerSlash, ClockCounterClockwise, CaretDown, CaretUp, SignOut, WifiHigh, BatteryFull, Drop, Lightning, Check, Camera, CircleNotch } from '@phosphor-icons/react';
 type ResidentTab = 'outages' | 'notices' | 'reports' | 'management';
 
 interface ResidentAppProps {
@@ -123,7 +104,7 @@ export const ClientApp: React.FC<ResidentAppProps> = ({ standalone = false }) =>
             className="w-9 h-9 rounded-full elevate-button-secondary text-slate-500 hover:text-rose-500 flex items-center justify-center transition-colors"
             title={t.resident.switch_logout_title}
           >
-            <LogOut className={`w-4 h-4 ${isRtl ? 'rotate-180' : ''}`} />
+            <SignOut weight="duotone" className={`w-4 h-4 ${isRtl ? 'rotate-180' : ''}`} />
           </button>
         </div>
 
@@ -163,7 +144,7 @@ export const ClientApp: React.FC<ResidentAppProps> = ({ standalone = false }) =>
                         ? 'bg-rose-100 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400' 
                         : 'bg-sky-100 dark:bg-sky-500/20 text-sky-600 dark:text-sky-400'
                     }`}>
-                      <Droplet className="w-4 h-4" />
+                      <Drop weight="duotone" className="w-4 h-4" />
                     </div>
                     <h3 className={`font-bold text-xs ${activeWaterIncident ? 'text-rose-700 dark:text-rose-300' : 'text-slate-800 dark:text-slate-200'}`}>
                       {t.incident_card.cat_water}
@@ -194,7 +175,7 @@ export const ClientApp: React.FC<ResidentAppProps> = ({ standalone = false }) =>
                         ? 'bg-rose-100 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400' 
                         : 'bg-amber-100 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400'
                     }`}>
-                      <Zap className="w-4 h-4" />
+                      <Lightning weight="duotone" className="w-4 h-4" />
                     </div>
                     <h3 className={`font-bold text-xs ${activePowerIncident ? 'text-rose-700 dark:text-rose-300' : 'text-slate-800 dark:text-slate-200'}`}>
                       {t.incident_card.cat_power}
@@ -209,7 +190,7 @@ export const ClientApp: React.FC<ResidentAppProps> = ({ standalone = false }) =>
 
         <Suspense fallback={
           <div className="flex items-center justify-center h-40 text-slate-400">
-            <Loader2 className="w-8 h-8 animate-spin" />
+            <CircleNotch weight="duotone" className="w-8 h-8 animate-spin" />
           </div>
         }>
         {/* OUTAGES & STATUS TAB */}
@@ -218,7 +199,7 @@ export const ClientApp: React.FC<ResidentAppProps> = ({ standalone = false }) =>
             
             <div className="flex items-center justify-between mb-3 mt-1">
                 <h2 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-                  <AlertCircle className="w-4 h-4 text-emerald-500" />
+                  <WarningCircle weight="duotone" className="w-4 h-4 text-emerald-500" />
                   {t.resident.active_disruptions}
                 </h2>
                 
@@ -251,7 +232,7 @@ export const ClientApp: React.FC<ResidentAppProps> = ({ standalone = false }) =>
             <div className="space-y-4">
               {filteredIncidents.length === 0 ? (
                 <div className="p-8 rounded-3xl bg-slate-50 dark:bg-slate-800/40 border border-dashed border-slate-300 dark:border-slate-700 text-center transition-colors">
-                  <CheckCircle className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
+                  <CheckCircle weight="duotone" className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
                   <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-0.5">{t.resident.no_ongoing_issues}</h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400">{t.resident.no_ongoing_issues_desc}</p>
                 </div>
@@ -270,10 +251,10 @@ export const ClientApp: React.FC<ResidentAppProps> = ({ standalone = false }) =>
                     className="w-full flex items-center justify-between py-2 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors outline-none"
                   >
                     <div className="flex items-center gap-2">
-                      <History className="w-4 h-4 text-slate-400" />
+                      <ClockCounterClockwise weight="duotone" className="w-4 h-4 text-slate-400" />
                       <span className="text-xs font-bold uppercase tracking-wider">{t.resident.recently_resolved}</span>
                     </div>
-                    {showResolvedHistory ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                    {showResolvedHistory ? <CaretUp weight="duotone" className="w-4 h-4" /> : <CaretDown weight="duotone" className="w-4 h-4" />}
                   </button>
 
                   {showResolvedHistory && (
@@ -327,7 +308,7 @@ export const ClientApp: React.FC<ResidentAppProps> = ({ standalone = false }) =>
             }`}
           >
             <div className="relative">
-              <AlertCircle className="w-5 h-5 mb-0.5" />
+              <WarningCircle weight="duotone" className="w-5 h-5 mb-0.5" />
               {unreadAlertCount > 0 && activeTab !== 'outages' && (
                 <span className="absolute -top-1 -right-1.5 w-2.5 h-2.5 bg-rose-500 rounded-full ring-2 ring-white dark:ring-slate-900"></span>
               )}
@@ -343,7 +324,7 @@ export const ClientApp: React.FC<ResidentAppProps> = ({ standalone = false }) =>
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            <Bell className="w-5 h-5 mb-0.5" />
+            <Bell weight="duotone" className="w-5 h-5 mb-0.5" />
             <span className="text-[10px]">{t.resident.tab_notices}</span>
           </button>
 
@@ -355,7 +336,7 @@ export const ClientApp: React.FC<ResidentAppProps> = ({ standalone = false }) =>
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            <MessageSquare className="w-5 h-5 mb-0.5" />
+            <ChatCircle weight="duotone" className="w-5 h-5 mb-0.5" />
             <span className="text-[10px]">{t.resident.tab_reports}</span>
           </button>
 
@@ -367,7 +348,7 @@ export const ClientApp: React.FC<ResidentAppProps> = ({ standalone = false }) =>
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            <Phone className="w-5 h-5 mb-0.5" />
+            <Phone weight="duotone" className="w-5 h-5 mb-0.5" />
             <span className="text-[10px]">{t.resident.tab_management}</span>
           </button>
         </div>

@@ -2,19 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNexiaStore } from '../../store/useNexiaStore';
 import { useLanguageStore } from '../../store/useLanguageStore';
 import { GrosTravauxProject, GrosTravauxStatus } from '../../types/building';
-import { 
-  X, 
-  Hammer, 
-  Calculator, 
-  Calendar, 
-  Phone, 
-  Building2, 
-  Save, 
-  AlertCircle,
-  FileCheck,
-  Clock,
-  Trash2
-} from 'lucide-react';
+import { X, Hammer, Calculator, Calendar, Phone, Buildings, FloppyDisk, WarningCircle, FileText, Clock, Trash } from '@phosphor-icons/react';
 
 interface AddGrosTravauxModalProps {
   isOpen: boolean;
@@ -127,7 +115,7 @@ export const AddGrosTravauxModal: React.FC<AddGrosTravauxModalProps> = ({
         <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold">
-              <Hammer className="w-5 h-5" />
+              <Hammer weight="duotone" className="w-5 h-5" />
             </div>
             <div>
               <h2 className="text-lg font-bold text-slate-900 dark:text-white">
@@ -142,14 +130,14 @@ export const AddGrosTravauxModal: React.FC<AddGrosTravauxModalProps> = ({
             onClick={onClose}
             className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X weight="duotone" className="w-5 h-5" />
           </button>
         </div>
 
         {/* Error Alert */}
         {error && (
           <div className="mx-6 mt-4 p-3 rounded-2xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/50 text-rose-800 dark:text-rose-300 text-xs flex items-center gap-2 shrink-0">
-            <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
+            <WarningCircle weight="duotone" className="w-4 h-4 shrink-0 text-rose-600" />
             <span>{error}</span>
           </div>
         )}
@@ -210,7 +198,7 @@ export const AddGrosTravauxModal: React.FC<AddGrosTravauxModalProps> = ({
             {/* Calculated Quota Banner */}
             <div className="mt-2.5 p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-between text-xs font-bold text-amber-800 dark:text-amber-300">
               <span className="flex items-center gap-1.5">
-                <Calculator className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                <Calculator weight="duotone" className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                 <span>{t.gros_travaux.quota_per_apt_label} :</span>
               </span>
               <span className="text-sm font-black text-amber-700 dark:text-amber-300">
@@ -294,7 +282,7 @@ export const AddGrosTravauxModal: React.FC<AddGrosTravauxModalProps> = ({
                   }}
                   className="px-4 py-2.5 rounded-2xl text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/10 flex items-center gap-2 transition-colors"
                 >
-                  <Trash2 className="w-4 h-4" />
+                  <Trash weight="duotone" className="w-4 h-4" />
                   <span>{t.common.delete || 'Supprimer'}</span>
                 </button>
               )}
@@ -311,7 +299,7 @@ export const AddGrosTravauxModal: React.FC<AddGrosTravauxModalProps> = ({
                 type="submit"
                 className="px-6 py-2.5 rounded-2xl bg-amber-600 hover:bg-amber-700 active:scale-[0.98] text-white text-xs font-bold shadow-lg shadow-amber-500/25 flex items-center gap-2 transition-all"
               >
-                <Save className="w-4 h-4" />
+                <FloppyDisk weight="duotone" className="w-4 h-4" />
                 <span>{t.gros_travaux.create_project_btn}</span>
               </button>
             </div>

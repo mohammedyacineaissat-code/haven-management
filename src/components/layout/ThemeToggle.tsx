@@ -1,5 +1,5 @@
 import React from 'react';
-import { Moon, Sun, Monitor } from 'lucide-react';
+import { Moon, Sun, Monitor } from '@phosphor-icons/react';
 import { useThemeStore } from '../../store/useThemeStore';
 
 export const ThemeToggle: React.FC = () => {
@@ -12,9 +12,9 @@ export const ThemeToggle: React.FC = () => {
   };
 
   const getIcon = () => {
-    if (theme === 'system') return <Monitor className="w-4 h-4" />;
-    if (theme === 'light') return <Sun className="w-4 h-4" />;
-    return <Moon className="w-4 h-4" />;
+    if (theme === 'system') return <Monitor weight="duotone" className="w-4 h-4" />;
+    if (theme === 'light') return <Sun weight="duotone" className="w-4 h-4" />;
+    return <Moon weight="duotone" className="w-4 h-4" />;
   };
 
   return (

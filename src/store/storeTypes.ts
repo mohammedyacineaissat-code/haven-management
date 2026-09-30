@@ -42,6 +42,7 @@ export interface StoreState {
   
   // Actions
   initializeData: (skipSync?: boolean) => Promise<void>;
+  cleanupData: () => void;
   setRole: (role: UserRole) => void;
   setActiveBuilding: (buildingId: string) => void;
   registerResident: (accountData: ResidentProfile) => Promise<{ success: boolean; message?: string }>;
@@ -57,13 +58,13 @@ export interface StoreState {
   // Database Actions
   addBuilding: (buildingData: Omit<Building, 'id'>) => Promise<void>;
   removeBuilding: (buildingId: string) => Promise<void>;
-  broadcastIncident: (newIncident: any) => Promise<void>;
+  broadcastIncident: (newIncident: Partial<Incident> & Pick<Incident, 'category' | 'severity' | 'title' | 'description' | 'location' | 'affectedUnits'>) => Promise<void>;
   updateIncidentStatus: (incidentId: string, status: IncidentStatus, note?: string) => Promise<void>;
   addTimelineNote: (incidentId: string, note: string) => Promise<void>;
   confirmRestoration: (incidentId: string, isRestored: boolean) => Promise<void>;
-  submitResidentReport: (report: any) => Promise<void>;
+  submitResidentReport: (report: Pick<ResidentReport, 'category' | 'location' | 'description' | 'photoUrl'>) => Promise<void>;
   updateTicketStatus: (ticketId: string, status: 'pending' | 'in_review' | 'resolved') => Promise<void>;
-  addNotice: (notice: any) => Promise<void>;
+  addNotice: (notice: Partial<BuildingNotice> & Pick<BuildingNotice, 'title' | 'content'>) => Promise<void>;
   deleteNotice: (noticeId: string) => Promise<void>;
   updateFinances: (buildingId: string, monthlyCharge: number, paidApts: string[]) => Promise<void>;
   addPayment: (buildingId: string, payment: Omit<PaymentRecord, 'id' | 'date' | 'buildingId'>) => Promise<void>;

@@ -1,18 +1,7 @@
 import React from 'react';
 import { useNexiaStore } from '../../store/useNexiaStore';
 import { useLanguageStore } from '../../store/useLanguageStore';
-import { 
-  Phone, 
-  ShieldAlert, 
-  Wrench, 
-  Zap, 
-  PhoneCall, 
-  Building, 
-  UserCheck, 
-  Info, 
-  MapPin, 
-  Clock
-} from 'lucide-react';
+import { Phone, ShieldWarning, Wrench, Lightning, PhoneCall, Building, UserCheck, Info, MapPin, Clock } from '@phosphor-icons/react';
 
 export const EmergencyDirectory: React.FC = () => {
   const { currentRole, staffContacts, contractorContacts } = useNexiaStore();
@@ -20,10 +9,10 @@ export const EmergencyDirectory: React.FC = () => {
 
   const getContractorIcon = (iconName: string) => {
     switch (iconName) {
-      case 'wrench': return <Wrench className="w-5 h-5 text-sky-600" />;
-      case 'shield-alert': return <ShieldAlert className="w-5 h-5 text-indigo-600" />;
-      case 'zap': return <Zap className="w-5 h-5 text-amber-600" />;
-      default: return <PhoneCall className="w-5 h-5 text-blue-600" />;
+      case 'wrench': return <Wrench weight="duotone" className="w-5 h-5 text-sky-600" />;
+      case 'shield-alert': return <ShieldWarning weight="duotone" className="w-5 h-5 text-indigo-600" />;
+      case 'zap': return <Lightning weight="duotone" className="w-5 h-5 text-amber-600" />;
+      default: return <PhoneCall weight="duotone" className="w-5 h-5 text-blue-600" />;
     }
   };
 
@@ -64,7 +53,7 @@ export const EmergencyDirectory: React.FC = () => {
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-500/20 flex items-center justify-center shrink-0">
-                    {staff.id === 'staff-1' ? <Building className="w-6 h-6" /> : <UserCheck className="w-6 h-6" />}
+                    {staff.id === 'staff-1' ? <Building weight="duotone" className="w-6 h-6" /> : <UserCheck weight="duotone" className="w-6 h-6" />}
                   </div>
                   <div>
                     <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
@@ -83,18 +72,18 @@ export const EmergencyDirectory: React.FC = () => {
                   href={`tel:${staff.phone.replace(/\s+/g, '')}`}
                   className="px-4 py-2 rounded-full elevate-button-primary text-xs font-bold flex items-center gap-1.5 shadow-sm transition-transform active:scale-95 shrink-0"
                 >
-                  <Phone className="w-3.5 h-3.5" />
+                  <Phone weight="duotone" className="w-3.5 h-3.5" />
                   <span>{t.directory.call_btn}</span>
                 </a>
               </div>
 
               <div className="pt-2 border-t border-slate-100 dark:border-slate-800 grid grid-cols-1 gap-1.5 text-xs text-slate-500 dark:text-slate-400">
                 <div className="flex items-center gap-1.5">
-                  <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                  <Clock weight="duotone" className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                   <span>{staff.available}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                  <MapPin weight="duotone" className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                   <span>{staff.location}</span>
                 </div>
               </div>
@@ -103,7 +92,7 @@ export const EmergencyDirectory: React.FC = () => {
 
           {/* Policy info for Residents */}
           <div className="p-4 rounded-2xl bg-indigo-50/70 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 flex items-start gap-3 text-xs">
-            <Info className="w-5 h-5 text-indigo-600 dark:text-indigo-400 shrink-0 mt-0.5" />
+            <Info weight="duotone" className="w-5 h-5 text-indigo-600 dark:text-indigo-400 shrink-0 mt-0.5" />
             <div className="text-slate-600 dark:text-slate-300 leading-relaxed text-[11px]">
               <strong className="text-slate-900 dark:text-white block font-bold mb-0.5">
                 {t.directory.contractor_policy_title}
@@ -117,7 +106,7 @@ export const EmergencyDirectory: React.FC = () => {
         /* MANAGER VIEW: Contractor Directory */
         <div className="space-y-3">
           <div className="p-3.5 rounded-2xl bg-amber-50/80 dark:bg-amber-500/10 border border-amber-200/80 dark:border-amber-500/30 text-xs text-amber-900 dark:text-amber-200 flex items-center gap-2">
-            <ShieldAlert className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+            <ShieldWarning weight="duotone" className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
             <span>{t.directory.contractor_auth_notice}</span>
           </div>
 
@@ -149,7 +138,7 @@ export const EmergencyDirectory: React.FC = () => {
                 className="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 hover:bg-emerald-100 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-500/30 flex items-center justify-center shrink-0 transition-transform active:scale-95 shadow-sm"
                 title={t.directory.dispatch_contractor}
               >
-                <Phone className="w-4 h-4" />
+                <Phone weight="duotone" className="w-4 h-4" />
               </a>
             </div>
           ))}
@@ -159,7 +148,7 @@ export const EmergencyDirectory: React.FC = () => {
       {/* Public Emergency Lines in Algeria */}
       <div className="p-5 rounded-3xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-700/80">
         <div className="text-xs font-bold text-slate-800 dark:text-slate-200 mb-1 flex items-center gap-1.5">
-          <ShieldAlert className="w-4 h-4 text-slate-500" />
+          <ShieldWarning weight="duotone" className="w-4 h-4 text-slate-500" />
           <span>{t.directory.emergency_title}</span>
         </div>
         <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNexiaStore } from '../../store/useNexiaStore';
 import { useLanguageStore } from '../../store/useLanguageStore';
-import { Search, Phone, Home, User, ShieldCheck } from 'lucide-react';
+import { MagnifyingGlass, Phone, House, User, ShieldCheck } from '@phosphor-icons/react';
 
 export const ResidentsListView = () => {
   const { registeredAccounts, activeBuildingId } = useNexiaStore();
@@ -29,7 +29,7 @@ export const ResidentsListView = () => {
       </div>
 
       <div className="relative">
-        <Search className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
+        <MagnifyingGlass weight="duotone" className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
         <input
           type="text"
           value={search}
@@ -57,7 +57,7 @@ export const ResidentsListView = () => {
                       {resident.lastName} {resident.firstName}
                     </h4>
                     <p className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-0.5">
-                      <ShieldCheck className="w-3 h-3 text-emerald-500" />
+                      <ShieldCheck weight="duotone" className="w-3 h-3 text-emerald-500" />
                       {t.residents_list.registered_on} {resident.joinedAt || t.residents_list.recently}
                     </p>
                   </div>
@@ -66,11 +66,11 @@ export const ResidentsListView = () => {
               
               <div className="grid grid-cols-2 gap-2 mt-1">
                 <div className="rounded-xl p-2 bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 flex items-center gap-2 transition-colors">
-                  <Home className="w-3.5 h-3.5 text-slate-400" />
+                  <House weight="duotone" className="w-3.5 h-3.5 text-slate-400" />
                   <span className="text-xs text-slate-800 dark:text-slate-200 font-semibold truncate">Apt {resident.aptNumber}</span>
                 </div>
                 <div className="rounded-xl p-2 bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 flex items-center gap-2 transition-colors">
-                  <Phone className="w-3.5 h-3.5 text-slate-400" />
+                  <Phone weight="duotone" className="w-3.5 h-3.5 text-slate-400" />
                   <span className="text-xs text-slate-800 dark:text-slate-200 font-semibold truncate">{resident.phone}</span>
                 </div>
               </div>

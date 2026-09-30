@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNexiaStore } from '../../../store/useNexiaStore';
 import { useLanguageStore } from '../../../store/useLanguageStore';
-import { Users, Plus, Phone, Search, Building2, Briefcase, FileText, Trash2, Edit2 } from 'lucide-react';
+import { Users, Plus, Phone, MagnifyingGlass, Buildings, Briefcase, FileText, Trash, Pencil } from '@phosphor-icons/react';
 import { Employee } from '../../../types/building';
 
 export const HRModule = () => {
@@ -49,7 +49,7 @@ export const HRModule = () => {
         <div>
           <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-3">
             <div className="p-2 bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-xl">
-              <Users className="w-5 h-5" />
+              <Users weight="duotone" className="w-5 h-5" />
             </div>
             {t.hr_module.title}
           </h1>
@@ -59,7 +59,7 @@ export const HRModule = () => {
         </div>
 
         <button className="py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-bold flex items-center gap-2 transition-colors shadow-sm shadow-emerald-500/20">
-          <Plus className="w-4 h-4" />
+          <Plus weight="duotone" className="w-4 h-4" />
           <span>{t.hr_module.add_employee}</span>
         </button>
       </div>
@@ -73,7 +73,7 @@ export const HRModule = () => {
             <h3 className="text-3xl font-black text-slate-900 dark:text-white">{employees.length}</h3>
           </div>
           <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-slate-600 dark:text-slate-400">
-            <Users className="w-6 h-6" />
+            <Users weight="duotone" className="w-6 h-6" />
           </div>
         </div>
         
@@ -86,7 +86,7 @@ export const HRModule = () => {
             </h3>
           </div>
           <div className="w-12 h-12 bg-rose-100 dark:bg-rose-500/20 rounded-2xl flex items-center justify-center text-rose-600 dark:text-rose-400">
-            <Briefcase className="w-6 h-6" />
+            <Briefcase weight="duotone" className="w-6 h-6" />
           </div>
         </div>
       </div>
@@ -96,7 +96,7 @@ export const HRModule = () => {
         {/* Table Toolbar */}
         <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="relative w-full sm:max-w-xs">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <MagnifyingGlass weight="duotone" className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input 
               type="text" 
               placeholder={t.hr_module.search_placeholder}
@@ -152,7 +152,7 @@ export const HRModule = () => {
                     </td>
                     <td className="py-4 px-4">
                       <div className="flex items-center gap-1.5 text-sm font-medium text-slate-700 dark:text-slate-300">
-                        <Phone className="w-3.5 h-3.5 text-slate-400" />
+                        <Phone weight="duotone" className="w-3.5 h-3.5 text-slate-400" />
                         {emp.phone}
                       </div>
                     </td>
@@ -166,14 +166,14 @@ export const HRModule = () => {
                         {emp.salary.toLocaleString()} DA
                       </div>
                       <div className="flex items-center gap-1 text-[11px] font-bold text-slate-500 mt-0.5 uppercase tracking-wide">
-                        <FileText className="w-3 h-3" />
+                        <FileText weight="duotone" className="w-3 h-3" />
                         {emp.contractType}
                       </div>
                     </td>
                     <td className="py-4 px-4">
                       {assignedBuilding ? (
                         <div className="flex items-center gap-1.5 text-sm font-bold text-slate-700 dark:text-slate-300">
-                          <Building2 className="w-4 h-4 text-emerald-500" />
+                          <Buildings weight="duotone" className="w-4 h-4 text-emerald-500" />
                           {assignedBuilding.name}
                         </div>
                       ) : (
@@ -183,7 +183,7 @@ export const HRModule = () => {
                     <td className="py-4 px-4 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <button className="p-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 rounded-xl transition-colors">
-                          <Edit2 className="w-4 h-4" />
+                          <Pencil weight="duotone" className="w-4 h-4" />
                         </button>
                         <button 
                           onClick={() => {
@@ -193,7 +193,7 @@ export const HRModule = () => {
                           }}
                           className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-xl transition-colors"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash weight="duotone" className="w-4 h-4" />
                         </button>
                       </div>
                     </td>

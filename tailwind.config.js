@@ -10,9 +10,9 @@ export default {
       colors: {
         elevate: {
           bg: '#F8FAFC',          // Light canvas (clean slate-50)
-          'bg-dark': '#0B0F17',   // Dark canvas (deep OLED obsidian slate)
+          'bg-dark': '#121826',   // Softer Dark canvas
           card: '#FFFFFF',        // Light card surface
-          'card-dark': '#131B2A', // Dark card surface
+          'card-dark': '#1E293B', // Softer Dark card surface
           'card-muted-dark': '#1A2438',
           border: '#E2E8F0',      // Light border (slate-200)
           'border-dark': '#1E293B', // Dark border (slate-800)
@@ -24,6 +24,19 @@ export default {
           'accent-hover': '#142a45',
           'accent-indigo': '#d4af37', // Gold Secondary
           'accent-indigo-hover': '#b89626',
+        },
+        brand: {
+          50: '#E6FAFF',
+          100: '#CCF5FF',
+          200: '#99EBFF',
+          300: '#66E0FF',
+          400: '#33D6FF',
+          500: '#00D1FF', // Vivid neon cyan/teal for glowing effects
+          600: '#00B8E6', 
+          700: '#009ACC',
+          800: '#007A99',
+          900: '#005C73',
+          950: '#003D4D',
         },
         neu: {
           base: '#F8FAFC',
@@ -40,30 +53,32 @@ export default {
         sans: ['"Inter"', '"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
       },
       boxShadow: {
-        'card': '0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03)',
-        'card-hover': '0 12px 30px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04)',
-        'card-dark': '0 4px 24px -2px rgba(0, 0, 0, 0.5), 0 2px 8px -1px rgba(0, 0, 0, 0.3)',
-        'card-dark-hover': '0 12px 32px -4px rgba(0, 0, 0, 0.7), 0 4px 14px -2px rgba(0, 0, 0, 0.4)',
-        'glow-emerald': '0 0 24px -4px rgba(16, 185, 129, 0.3)',
-        'glow-indigo': '0 0 24px -4px rgba(99, 102, 241, 0.3)',
-        'glow-rose': '0 0 24px -4px rgba(244, 63, 94, 0.3)',
-        'glow-amber': '0 0 24px -4px rgba(245, 158, 11, 0.3)',
-        'neu-extruded': '0 4px 20px -2px rgba(15, 23, 42, 0.05)',
-        'neu-extruded-hover': '0 10px 25px -3px rgba(15, 23, 42, 0.08)',
-        'neu-extruded-sm': '0 2px 8px -1px rgba(15, 23, 42, 0.04)',
-        'neu-inset': 'none',
-        'neu-inset-deep': 'none',
-        'neu-inset-sm': 'none',
-        'neu-dark-extruded': '0 4px 24px -2px rgba(0, 0, 0, 0.5)',
-        'neu-dark-extruded-hover': '0 10px 28px -3px rgba(0, 0, 0, 0.6)',
-        'neu-dark-extruded-sm': '0 2px 8px -1px rgba(0, 0, 0, 0.4)',
-        'neu-dark-inset': 'none',
-        'neu-dark-inset-deep': 'none',
+        'apple': '0 8px 30px rgba(0, 0, 0, 0.04)',
+        'apple-hover': '0 12px 40px rgba(0, 0, 0, 0.08)',
+        'apple-lg': '0 30px 60px rgba(0, 0, 0, 0.12)',
+        'apple-glass': 'inset 0 0 0 1px rgba(255,255,255,0.4), 0 8px 32px 0 rgba(0, 0, 0, 0.04)',
+        'apple-dark': '0 8px 30px rgba(0, 0, 0, 0.4)',
+        'apple-dark-hover': '0 12px 40px rgba(0, 0, 0, 0.6)',
+        'apple-lg-dark': '0 30px 60px rgba(0, 0, 0, 0.6)',
+        'apple-glass-dark': 'inset 0 0 0 1px rgba(255,255,255,0.1), 0 8px 32px 0 rgba(0, 0, 0, 0.4)',
+        'glow-brand': '0 0 30px -5px rgba(0, 209, 255, 0.4)',
       },
       borderRadius: {
         '2xl': '16px',
         '3xl': '24px',
         '4xl': '32px',
+        '5xl': '40px',
+      },
+      keyframes: {
+        mesh: {
+          '0%, 100%': { transform: 'translate(0px, 0px) scale(1)' },
+          '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+          '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+        }
+      },
+      animation: {
+        'mesh-slow': 'mesh 15s infinite ease-in-out',
+        'mesh-slower': 'mesh 20s infinite ease-in-out reverse',
       }
     },
   },

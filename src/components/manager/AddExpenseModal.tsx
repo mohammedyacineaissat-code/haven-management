@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Calculator, Receipt, AlertCircle } from 'lucide-react';
+import { X, Calculator, Receipt, WarningCircle } from '@phosphor-icons/react';
 import { useNexiaStore } from '../../store/useNexiaStore';
 import { useLanguageStore } from '../../store/useLanguageStore';
 
@@ -83,7 +83,7 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
         <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between bg-slate-50/70 dark:bg-slate-800/40">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 flex items-center justify-center">
-              <Receipt className="w-5 h-5" />
+              <Receipt weight="duotone" className="w-5 h-5" />
             </div>
             <div>
               <h2 className="text-base font-bold text-slate-900 dark:text-white">
@@ -98,14 +98,14 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
             onClick={onClose} 
             className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 flex items-center justify-center shrink-0 transition-colors"
           >
-            <X className="w-4 h-4" />
+            <X weight="duotone" className="w-4 h-4" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {validationError && (
             <div className="p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-xs flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0" />
+              <WarningCircle weight="duotone" className="w-4 h-4 shrink-0" />
               <span>{validationError}</span>
             </div>
           )}
@@ -160,7 +160,7 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
 
           <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20">
             <div className="flex items-center gap-1.5 mb-1.5">
-              <Calculator className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
+              <Calculator weight="duotone" className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
               <span className="text-xs font-bold text-emerald-900 dark:text-emerald-300">Calcul de la Quote-Part</span>
             </div>
             
@@ -187,7 +187,7 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
               type="submit"
               className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm flex items-center gap-2 transition-all active:scale-95 shadow-emerald-600/20"
             >
-              <Receipt className="w-3.5 h-3.5" />
+              <Receipt weight="duotone" className="w-3.5 h-3.5" />
               <span>Publier aux Résidents</span>
             </button>
           </div>

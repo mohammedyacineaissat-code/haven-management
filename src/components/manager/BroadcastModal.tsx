@@ -1,19 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  X, 
-  Droplet, 
-  Zap, 
-  ArrowUpDown, 
-  Flame, 
-  Send,
-  Clock,
-  MapPin,
-  Users,
-  AlertTriangle,
-  Info,
-  CheckSquare,
-  ShieldAlert
-} from 'lucide-react';
+import { X, Drop, Lightning, ArrowsVertical, Fire, PaperPlaneRight, Clock, MapPin, Users, Warning, Info, CheckSquare, ShieldWarning } from '@phosphor-icons/react';
 import { useNexiaStore } from '../../store/useNexiaStore';
 import { useLanguageStore } from '../../store/useLanguageStore';
 import { IncidentCategory, SeverityLevel } from '../../types/building';
@@ -101,7 +87,7 @@ export const BroadcastModal: React.FC<BroadcastModalProps> = ({
         <div className="px-6 py-4 flex items-center justify-between border-b border-slate-100 dark:border-slate-800/80">
           <div>
             <h2 className="text-base font-bold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
-              <ShieldAlert className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <ShieldWarning weight="duotone" className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span>{t.manager_modals.broadcast_title}</span>
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
@@ -113,7 +99,7 @@ export const BroadcastModal: React.FC<BroadcastModalProps> = ({
             onClick={onClose}
             className="w-8 h-8 rounded-full elevate-button-secondary text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
           >
-            <X className="w-4 h-4" />
+            <X weight="duotone" className="w-4 h-4" />
           </button>
         </div>
 
@@ -122,7 +108,7 @@ export const BroadcastModal: React.FC<BroadcastModalProps> = ({
           
           {validationError && (
             <div className="p-3 rounded-2xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 shrink-0" />
+              <Warning weight="duotone" className="w-4 h-4 shrink-0" />
               <span>{validationError}</span>
             </div>
           )}
@@ -134,10 +120,10 @@ export const BroadcastModal: React.FC<BroadcastModalProps> = ({
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {[
-                { id: 'water', label: t.manager_modals.service_water, icon: Droplet },
-                { id: 'elevator', label: t.manager_modals.service_elevator, icon: ArrowUpDown },
-                { id: 'power', label: t.manager_modals.service_power, icon: Zap },
-                { id: 'heating', label: t.manager_modals.service_heating, icon: Flame },
+                { id: 'water', label: t.manager_modals.service_water, icon: Drop },
+                { id: 'elevator', label: t.manager_modals.service_elevator, icon: ArrowsVertical },
+                { id: 'power', label: t.manager_modals.service_power, icon: Lightning },
+                { id: 'heating', label: t.manager_modals.service_heating, icon: Fire },
               ].map((item) => {
                 const Icon = item.icon;
                 const isSelected = category === item.id;
@@ -239,7 +225,7 @@ export const BroadcastModal: React.FC<BroadcastModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
-                <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                <MapPin weight="duotone" className="w-3.5 h-3.5 text-slate-400" />
                 <span>{t.manager_modals.location_label}</span>
               </label>
               <input
@@ -252,7 +238,7 @@ export const BroadcastModal: React.FC<BroadcastModalProps> = ({
             </div>
             <div>
               <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
-                <Users className="w-3.5 h-3.5 text-slate-400" />
+                <Users weight="duotone" className="w-3.5 h-3.5 text-slate-400" />
                 <span>{t.manager_modals.affected_units_label}</span>
               </label>
               <input
@@ -269,7 +255,7 @@ export const BroadcastModal: React.FC<BroadcastModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1">
-                <Clock className="w-3.5 h-3.5 text-emerald-500" />
+                <Clock weight="duotone" className="w-3.5 h-3.5 text-emerald-500" />
                 <span>{t.manager_modals.eta_label}</span>
               </label>
               <input
@@ -323,7 +309,7 @@ export const BroadcastModal: React.FC<BroadcastModalProps> = ({
               type="submit"
               className="elevate-button-primary px-5 py-2.5 text-xs"
             >
-              <Send className="w-3.5 h-3.5 mr-2" />
+              <PaperPlaneRight weight="duotone" className="w-3.5 h-3.5 mr-2" />
               <span>{t.manager_modals.send_broadcast}</span>
             </button>
           </div>

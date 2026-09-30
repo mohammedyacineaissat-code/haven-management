@@ -1,16 +1,5 @@
 import React, { useState } from 'react';
-import { 
-  X, 
-  Bell, 
-  Pin, 
-  Wrench, 
-  Users, 
-  ShieldAlert, 
-  Info, 
-  AlertCircle,
-  Building2,
-  Send
-} from 'lucide-react';
+import { X, Bell, PushPin, Wrench, Users, ShieldWarning, Info, WarningCircle, Buildings, PaperPlaneRight } from '@phosphor-icons/react';
 import { useNexiaStore } from '../../store/useNexiaStore';
 import { useLanguageStore } from '../../store/useLanguageStore';
 
@@ -43,8 +32,8 @@ export const AddAnnouncementModal: React.FC<AddAnnouncementModalProps> = ({
     { id: 'info', label: t.announcement_modal.cat_info, icon: Info, color: 'blue' },
     { id: 'maintenance', label: t.announcement_modal.cat_maintenance, icon: Wrench, color: 'amber' },
     { id: 'meeting', label: t.announcement_modal.cat_meeting, icon: Users, color: 'indigo' },
-    { id: 'security', label: t.announcement_modal.cat_security, icon: ShieldAlert, color: 'rose' },
-    { id: 'urgent', label: t.announcement_modal.cat_urgent, icon: AlertCircle, color: 'red' },
+    { id: 'security', label: t.announcement_modal.cat_security, icon: ShieldWarning, color: 'rose' },
+    { id: 'urgent', label: t.announcement_modal.cat_urgent, icon: WarningCircle, color: 'red' },
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -85,14 +74,14 @@ export const AddAnnouncementModal: React.FC<AddAnnouncementModalProps> = ({
         <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/70 dark:bg-slate-800/50">
           <div className="flex items-center gap-2.5">
             <div className="w-10 h-10 rounded-2xl bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-400 flex items-center justify-center shadow-sm">
-              <Bell className="w-5 h-5" />
+              <Bell weight="duotone" className="w-5 h-5" />
             </div>
             <div>
               <h2 className="text-base font-bold text-slate-900 dark:text-white">
                 {t.announcement_modal.title}
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-0.5">
-                <Building2 className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
+                <Buildings weight="duotone" className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
                 <span>{t.announcement_modal.display_for} {currentBuilding?.name}</span>
               </p>
             </div>
@@ -101,7 +90,7 @@ export const AddAnnouncementModal: React.FC<AddAnnouncementModalProps> = ({
             onClick={onClose} 
             className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 flex items-center justify-center shrink-0 transition-colors"
           >
-            <X className="w-4 h-4" />
+            <X weight="duotone" className="w-4 h-4" />
           </button>
         </div>
 
@@ -110,7 +99,7 @@ export const AddAnnouncementModal: React.FC<AddAnnouncementModalProps> = ({
           
           {error && (
             <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800/50 text-rose-700 dark:text-rose-400 text-xs flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0" />
+              <WarningCircle weight="duotone" className="w-4 h-4 shrink-0" />
               <span>{error}</span>
             </div>
           )}
@@ -173,7 +162,7 @@ export const AddAnnouncementModal: React.FC<AddAnnouncementModalProps> = ({
             />
           </div>
 
-          {/* Author and Pin Toggle */}
+          {/* Author and PushPin Toggle */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
             <div>
               <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
@@ -190,7 +179,7 @@ export const AddAnnouncementModal: React.FC<AddAnnouncementModalProps> = ({
 
             <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
               <div className="flex items-center gap-2">
-                <Pin className={`w-4 h-4 ${isPinned ? 'text-blue-600 dark:text-blue-500 fill-blue-600 dark:fill-blue-500' : 'text-slate-400 dark:text-slate-500'}`} />
+                <PushPin weight="duotone" className={`w-4 h-4 ${isPinned ? 'text-blue-600 dark:text-blue-500 fill-blue-600 dark:fill-blue-500' : 'text-slate-400 dark:text-slate-500'}`} />
                 <span className="text-xs font-bold text-slate-800 dark:text-slate-200">{t.announcement_modal.pin_to_top}</span>
               </div>
               <input
@@ -215,7 +204,7 @@ export const AddAnnouncementModal: React.FC<AddAnnouncementModalProps> = ({
               type="submit"
               className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-600/30 flex items-center gap-2 transition-transform active:scale-95"
             >
-              <Send className="w-3.5 h-3.5" />
+              <PaperPlaneRight weight="duotone" className="w-3.5 h-3.5" />
               <span>{t.announcement_modal.publish_btn}</span>
             </button>
           </div>
